@@ -1,478 +1,2048 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test Vocacional</title>
+  <title>Career Aptitude Assessment / Test Vocacional</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- PayPal SDK (Sandbox Client ID) -->
+  <!-- PayPal SDK (Sandbox client-id as provided). For LIVE, swap client-id and env in Netlify. -->
   <script src="https://www.paypal.com/sdk/js?client-id=AT3lDO9UP6KY9SIu9XjaWpABL-jMhYhPQd8pzBAGF159cLNWcPyNDWw9YVwiy_IXmrCnIqoQamJsOfQ_&currency=USD"></script>
 
   <style>
     :root{
-      --navy:#1b1464;--dark-blue:#2d1b8e;--accent:#6c5ce7;--pink:#fda7df;
-      --green:#2dd4bf;--green-light:#ccfbf1;--card:#fff;--bg:#f9fafb;
-      --border:#e5e7eb;--text:#1f2937;--text-light:#6b7280;
-      --shadow:0 10px 25px rgba(0,0,0,.08)
+      --bg0:#0b1020;
+      --bg1:#0c1633;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --stroke2: rgba(255,255,255,.18);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --accent:#8b5cf6;
+      --accent2:#f472b6;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --shadow: 0 18px 50px rgba(0,0,0,.40);
+      --shadow2: 0 12px 28px rgba(139,92,246,.22);
+      --radius: 20px;
     }
-    *{margin:0;padding:0;box-sizing:border-box}
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
     body{
-      font-family:'DM Sans',sans-serif;
-      background:linear-gradient(135deg,#f9fafb 0%,#f3f4f6 100%);
-      color:var(--text);
-      min-height:100vh;
-    }
-    .container{max-width:1000px;margin:0 auto;padding:20px}
-    header{
-      text-align:center;
-      padding:54px 20px 38px;
-      background:linear-gradient(135deg,var(--navy) 0%,var(--dark-blue) 100%);
-      color:#fff;border-radius:20px;margin:18px 0 34px;box-shadow:var(--shadow)
-    }
-    header h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;letter-spacing:.2px}
-    header p{margin-top:10px;opacity:.92;font-size:16px}
-
-    .card{
-      background:var(--card);
-      padding:32px;
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      margin:0 auto 22px;
-      max-width:650px;
-    }
-    label{display:block;margin-bottom:8px;font-weight:600;color:var(--navy)}
-    input[type="text"]{
-      width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;
-      font-family:'DM Sans',sans-serif;font-size:15px;background:#fff
-    }
-    input[type="text"]:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 4px rgba(108,92,231,.12)}
-
-    .btn{
-      width:100%;
-      padding:14px 16px;
-      border:0;border-radius:12px;
-      font-family:'DM Sans',sans-serif;
-      font-weight:700;
-      cursor:pointer;
-      transition:transform .15s ease, box-shadow .2s ease;
-    }
-    .btn-primary{
-      background:linear-gradient(135deg,var(--navy),var(--dark-blue));
-      color:#fff;margin-top:16px;
-    }
-    .btn-primary:hover{box-shadow:0 12px 30px rgba(27,20,100,.25);transform:translateY(-1px)}
-    .muted{color:var(--text-light);font-size:13px;margin-top:10px;line-height:1.35}
-
-    .questions{display:none}
-    .questions.show{display:block}
-    .q-title{font-size:18px;font-weight:700;color:var(--navy);margin:18px 0 12px}
-    .option-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
-    .option input{display:none}
-    .option label{
-      padding:12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;
-      text-align:center;font-weight:600;background:#fff;color:var(--text);
-      transition:border-color .15s ease, transform .15s ease, box-shadow .2s ease;
-    }
-    .option label:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.06)}
-    .option input:checked + label{
-      border-color:var(--accent);
-      background:linear-gradient(135deg,rgba(108,92,231,.10),rgba(253,167,223,.10));
-      color:var(--accent)
+      font-family: "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--txt);
+      background:
+        radial-gradient(1100px 700px at 20% -10%, rgba(139,92,246,.28), transparent 60%),
+        radial-gradient(900px 640px at 85% 0%, rgba(244,114,182,.22), transparent 58%),
+        radial-gradient(800px 600px at 60% 120%, rgba(52,211,153,.15), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
     }
 
-    .results{display:none}
-    .results.show{display:block}
-    .result-card{
-      background:linear-gradient(135deg,var(--accent),var(--pink));
-      color:#fff;padding:26px;border-radius:16px;margin-bottom:18px;
-      box-shadow:var(--shadow);
-    }
-    .result-card h2{font-family:'Playfair Display',serif;font-size:30px}
-    .result-card p{margin-top:8px;opacity:.95}
-    .result-details{
-      margin-top:16px;
-      text-align:left;
-      background:rgba(255,255,255,.14);
-      padding:16px;border-radius:12px
-    }
-    .result-details p{margin:8px 0}
+    .wrap{ max-width: 1120px; margin: 0 auto; padding: 22px 16px 90px; }
 
-    .paywall{
-      background:var(--card);
-      border-radius:16px;
-      padding:28px;
-      box-shadow:var(--shadow);
-      margin-top:16px;
-    }
-    .paywall h3{
-      font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);text-align:center;margin-bottom:6px
-    }
-    .paywall > p{text-align:center;color:var(--text-light);margin-bottom:18px}
-    .legal{
-      display:flex;gap:10px;align-items:flex-start;
-      background:linear-gradient(135deg,#fff,rgba(108,92,231,.04));
-      border:1.5px solid var(--border);
-      padding:12px;border-radius:12px;
-      margin:14px 0 18px;
-      font-size:13px;color:var(--text);
-    }
-    .legal input{margin-top:2px}
-    .plans{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
-    .plan{
-      border:1.5px solid var(--border);
-      border-radius:14px;
-      padding:18px;background:#fff;
+    /* Header */
+    .hero{
       position:relative;
-      transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+      border-radius: 26px;
+      padding: 26px 22px 22px;
+      background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      overflow:hidden;
     }
-    .plan:hover{border-color:var(--accent);box-shadow:0 14px 30px rgba(108,92,231,.14);transform:translateY(-2px)}
+    .hero:before{
+      content:"";
+      position:absolute; inset:-140px auto auto -160px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle at 30% 30%, rgba(139,92,246,.45), rgba(139,92,246,0) 62%);
+      transform: rotate(14deg);
+      filter: blur(1px);
+    }
+    .hero:after{
+      content:"";
+      position:absolute; inset:-140px -170px auto auto;
+      width: 440px; height: 440px;
+      background: radial-gradient(circle at 35% 35%, rgba(244,114,182,.40), rgba(244,114,182,0) 62%);
+      transform: rotate(-12deg);
+      filter: blur(1px);
+    }
+
+    .heroTop{
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-width: 280px;
+    }
     .badge{
-      position:absolute;top:-10px;left:50%;transform:translateX(-50%);
-      background:var(--accent);color:#fff;font-size:11px;font-weight:800;
-      padding:4px 12px;border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--stroke);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:.3px;
+      color: rgba(255,255,255,.88);
     }
-    .plan h4{font-size:16px;color:var(--navy);margin-bottom:6px}
-    .price{font-size:28px;font-weight:900;color:var(--accent)}
-    .features{list-style:none;margin:14px 0 10px}
-    .features li{padding:7px 0;border-bottom:1px solid var(--bg);font-size:13px}
-    .features li:last-child{border-bottom:0}
-    .small{font-size:12px;color:var(--text-light);line-height:1.35}
+    .title{
+      font-family: "Playfair Display", serif;
+      font-size: 40px;
+      line-height:1.02;
+      letter-spacing:.2px;
+    }
+    .sub{
+      color: var(--muted);
+      line-height:1.35;
+      max-width: 660px;
+      font-size: 14px;
+    }
 
-    .invite-box{
-      margin-top:12px;
-      padding:12px;
-      border:1.5px dashed var(--border);
-      border-radius:12px;
-      background:rgba(45,27,142,.02);
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:2;
     }
-    .invite-box input{margin-top:8px}
-    .invite-actions{
-      display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;
-    }
-    .btn-secondary{
-      padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);
-      background:#fff;font-weight:800;cursor:pointer;
-    }
-    .btn-secondary:hover{border-color:var(--accent)}
-    .status-line{margin-top:10px;font-size:13px;color:var(--text-light)}
-    .ok{color:#0f766e;font-weight:800}
-    .err{color:#b91c1c;font-weight:800}
 
-    .paypal-wrap{margin-top:10px}
-    .disabled{opacity:.45;pointer-events:none}
-
-    @media (max-width:680px){
-      header h1{font-size:36px}
-      .plans{grid-template-columns:1fr}
+    .langBtn{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: var(--txt);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 800;
+      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+      user-select:none;
     }
+    .langBtn:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.30); border-color: var(--stroke2); }
+    .langBtn.active{
+      border-color: rgba(139,92,246,.55);
+      background: linear-gradient(135deg, rgba(139,92,246,.18), rgba(244,114,182,.12));
+    }
+
+    .sound{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      user-select:none;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:.25px;
+    }
+    .switch{
+      width: 46px;
+      height: 26px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid var(--stroke);
+      position:relative;
+      cursor:pointer;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .switch:after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background:#fff;
+      box-shadow: 0 10px 20px rgba(0,0,0,.35);
+      transition: left .2s ease;
+    }
+    .switch.on{
+      background: rgba(139,92,246,.20);
+      border-color: rgba(139,92,246,.45);
+    }
+    .switch.on:after{ left: 24px; }
+
+    /* Layout */
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media(max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panelInner{ padding: 18px; }
+
+    /* Progress + step */
+    .topBar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-bottom: 1px solid var(--stroke);
+    }
+    .progressWrap{ flex:1; min-width: 180px; }
+    .progressLabel{
+      display:flex;
+      justify-content:space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--stroke);
+      overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+    .stepChip{
+      white-space:nowrap;
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(255,255,255,.88);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Screens */
+    .screen{ display:none; }
+    .screen.show{ display:block; }
+
+    .h2{
+      font-family:"Playfair Display", serif;
+      font-size: 26px;
+      letter-spacing:.2px;
+    }
+    .p{
+      margin-top: 8px;
+      color: var(--muted);
+      line-height:1.4;
+      font-size: 14px;
+    }
+    .hint{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(139,92,246,.22);
+      background: linear-gradient(135deg, rgba(139,92,246,.10), rgba(244,114,182,.06));
+      color: rgba(255,255,255,.88);
+      font-size: 13px;
+      line-height:1.35;
+    }
+
+    .field{ margin-top: 14px; }
+    .label{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.85);
+      font-weight: 900;
+      letter-spacing:.25px;
+      margin-bottom: 8px;
+      text-transform:uppercase;
+    }
+    .input{
+      width:100%;
+      border: 1.5px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: var(--txt);
+      padding: 12px 14px;
+      border-radius: 16px;
+      outline:none;
+      font-size: 15px;
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    .input:focus{
+      border-color: rgba(139,92,246,.55);
+      box-shadow: 0 0 0 4px rgba(139,92,246,.16);
+    }
+
+    .qCard{
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--stroke);
+    }
+    .qText{
+      font-weight: 900;
+      color: rgba(255,255,255,.92);
+      line-height:1.25;
+      font-size: 16px;
+    }
+    .qHint{
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted2);
+      line-height:1.3;
+    }
+
+    .answers{
+      margin-top: 12px;
+      display:grid;
+      gap: 10px;
+    }
+
+    .ans{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+      user-select:none;
+    }
+    .ans:hover{ transform: translateY(-1px); box-shadow: 0 18px 36px rgba(0,0,0,.28); border-color: var(--stroke2); }
+    .ans.active{
+      border-color: rgba(139,92,246,.55);
+      background: linear-gradient(135deg, rgba(139,92,246,.16), rgba(244,114,182,.10));
+    }
+
+    .dot{
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.20);
+      margin-top: 3px;
+      flex: 0 0 12px;
+    }
+    .ans.active .dot{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: rgba(255,255,255,.35);
+    }
+
+    .ansText{
+      flex:1;
+      line-height:1.35;
+      font-size: 14px;
+      color: rgba(255,255,255,.92);
+    }
+    .ansTag{
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing:.25px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+      white-space:nowrap;
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .btn{
+      border: 0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .2s ease, opacity .2s ease;
+      font-family:"DM Sans", sans-serif;
+      user-select:none;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btnPrimary{
+      flex:1;
+      min-width: 200px;
+      color:#fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow2);
+    }
+    .btnPrimary:hover{ box-shadow: 0 18px 40px rgba(139,92,246,.30); }
+    .btnGhost{
+      color: rgba(255,255,255,.90);
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--stroke);
+      min-width: 160px;
+    }
+    .btnGhost:hover{ box-shadow: 0 18px 36px rgba(0,0,0,.25); border-color: var(--stroke2); }
+    .btnDanger{
+      color:#fff;
+      background: linear-gradient(135deg, rgba(251,113,133,.95), rgba(244,114,182,.65));
+    }
+
+    /* Sidebar */
+    .side{
+      padding: 18px;
+    }
+    .side h3{
+      font-family:"Playfair Display", serif;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .side p{
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.35;
+      margin-bottom: 12px;
+    }
+    .list{
+      display:grid;
+      gap: 10px;
+      list-style:none;
+    }
+    .li{
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .li b{ color: rgba(255,255,255,.92); }
+    .li span{ color: var(--muted); font-size: 13px; line-height:1.3; }
+
+    /* Results report */
+    .reportHero{
+      margin-top: 8px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(139,92,246,.18), rgba(244,114,182,.10));
+      box-shadow: var(--shadow);
+    }
+    .reportHeroTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+    }
+    .rBadge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+    }
+    .reportHero h2{
+      font-family:"Playfair Display", serif;
+      font-size: 30px;
+      margin-top: 10px;
+      line-height:1.05;
+    }
+    .summary{
+      margin-top: 10px;
+      color: rgba(255,255,255,.86);
+      line-height:1.45;
+      font-size: 14px;
+    }
+
+    .scoreRow{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0,1fr));
+      gap: 10px;
+    }
+    @media(max-width: 720px){
+      .scoreRow{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    .scoreBox{
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+    }
+    .scoreBox .k{
+      font-size: 12px;
+      font-weight: 900;
+      color: rgba(255,255,255,.82);
+      letter-spacing:.25px;
+    }
+    .scoreBox .v{
+      margin-top: 6px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+    .scoreBox .v b{
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .meter{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .meter > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 999px;
+      transition: width .35s ease;
+    }
+
+    .reportGrid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media(max-width: 980px){
+      .reportGrid{ grid-template-columns:1fr; }
+    }
+
+    .radarCard{
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 18px 38px rgba(0,0,0,.25);
+    }
+    .radarTitle{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .radarTitle b{ font-size: 14px; }
+    .radarTitle span{ font-size: 12px; color: var(--muted); }
+
+    canvas{ width:100%; height: 320px; display:block; }
+
+    .sections{
+      display:grid;
+      gap: 12px;
+    }
+    .sec{
+      border-radius: 22px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      padding: 14px;
+      overflow:hidden;
+      position:relative;
+      box-shadow: 0 16px 34px rgba(0,0,0,.20);
+    }
+    .secHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom: 8px;
+    }
+    .secHead .t{
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:.25px;
+      color: rgba(255,255,255,.92);
+    }
+    .secHead .h{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height:1.25;
+    }
+    .lock{
+      font-size: 11px;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      white-space:nowrap;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .content{
+      font-size: 13.5px;
+      line-height:1.5;
+      color: rgba(255,255,255,.88);
+    }
+    .content ul{
+      margin-top: 10px;
+      padding-left: 18px;
+      color: rgba(255,255,255,.86);
+    }
+    .content li{ margin: 6px 0; }
+
+    /* Preview blur */
+    .blurWrap{ position:relative; border-radius: 18px; overflow:hidden; }
+    .blurContent{ filter: blur(5px); opacity: .92; user-select:none; pointer-events:none; }
+    .blurOverlay{
+      position:absolute; inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(11,16,32,.55), rgba(11,16,32,.72));
+      border: 1px dashed rgba(139,92,246,.40);
+      border-radius: 18px;
+      backdrop-filter: blur(8px);
+    }
+    .blurOverlay b{ font-size: 14px; }
+    .blurOverlay p{ margin-top: 6px; color: var(--muted); font-size: 12px; line-height:1.35; }
+
+    /* Paywall */
+    .paywall{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid rgba(139,92,246,.28);
+      background: linear-gradient(135deg, rgba(139,92,246,.12), rgba(244,114,182,.08));
+      box-shadow: 0 18px 46px rgba(0,0,0,.30);
+    }
+    .payTitle{
+      font-family:"Playfair Display", serif;
+      font-size: 22px;
+      text-align:center;
+    }
+    .paySub{
+      margin-top: 6px;
+      color: var(--muted);
+      text-align:center;
+      font-size: 13px;
+      line-height:1.35;
+    }
+    .legal{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .legal input{ margin-top: 2px; }
+    .legal small{
+      display:block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.35;
+    }
+    .legal a{ color: rgba(255,255,255,.92); font-weight: 900; text-decoration:none; }
+    .legal a:hover{ text-decoration:underline; }
+
+    .plans{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media(max-width: 760px){
+      .plans{ grid-template-columns:1fr; }
+    }
+    .plan{
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      padding: 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .plan.reco:before{
+      content:"RECOMMENDED";
+      position:absolute;
+      top: 12px;
+      right: -38px;
+      transform: rotate(18deg);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing:.35px;
+      color: rgba(255,255,255,.92);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      padding: 6px 54px;
+      box-shadow: 0 12px 22px rgba(0,0,0,.25);
+    }
+    .plan h4{
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing:.25px;
+      color: rgba(255,255,255,.92);
+      margin-top: 2px;
+    }
+    .price{
+      margin-top: 8px;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing:.2px;
+      color: rgba(255,255,255,.94);
+    }
+    .feat{
+      margin-top: 10px;
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+      line-height:1.4;
+    }
+    .feat ul{ margin-top: 8px; padding-left: 18px; }
+    .feat li{ margin: 6px 0; }
+
+    .inviteBox{
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255,255,255,.22);
+      background: rgba(0,0,0,.18);
+    }
+    .inviteBox .row{
+      display:grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .miniBtn{
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .miniBtn:hover{ box-shadow: 0 18px 34px rgba(0,0,0,.25); border-color: rgba(255,255,255,.22); }
+
+    .ppWrap{ margin-top: 10px; }
+    .disabled{ opacity:.42; pointer-events:none; filter: grayscale(25%); }
+
+    .msg{ margin-top: 10px; font-size: 12.5px; color: var(--muted); line-height:1.35; }
+    .ok{ color: var(--good); font-weight: 900; }
+    .err{ color: var(--bad); font-weight: 900; }
+    .warn{ color: var(--warn); font-weight: 900; }
+
+    /* Share row */
+    .shareRow{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .shareBtns{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .shareBtn{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-weight: 900;
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+    }
+    .shareBtn:hover{ box-shadow: 0 18px 34px rgba(0,0,0,.25); border-color: var(--stroke2); }
+
+    /* Footer */
+    .footer{
+      margin-top: 14px;
+      text-align:center;
+      color: var(--muted2);
+      font-size: 12px;
+      line-height:1.5;
+    }
+    .footer a{ color: rgba(255,255,255,.90); font-weight: 900; text-decoration:none; }
+    .footer a:hover{ text-decoration:underline; }
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <header>
-      <h1>Test Vocacional</h1>
-      <p>Descubre tu carrera ideal en menos de 2 minutos</p>
-    </header>
+  <div class="wrap">
 
-    <!-- Inicio -->
-    <div class="card" id="startCard">
-      <div>
-        <label for="userName">Tu Nombre</label>
-        <input type="text" id="userName" placeholder="Escribe tu nombre..." />
-        <p class="muted">Este test ofrece una vista previa gratis. El reporte completo incluye recomendaciones más detalladas.</p>
+    <div class="hero">
+      <div class="heroTop">
+        <div class="brand">
+          <div class="badge" id="hBadge">Career Assessment</div>
+          <div class="title" id="hTitle">Career Aptitude Assessment</div>
+          <div class="sub" id="hSub">10 questions to discover your vocational profile and ideal career paths.</div>
+        </div>
+
+        <div class="controls">
+          <button class="langBtn active" id="langEN">English</button>
+          <button class="langBtn" id="langES">Español</button>
+
+          <div class="sound">
+            <span id="soundLabel">ON</span>
+            <div class="switch on" id="soundSwitch" aria-label="toggle sound"></div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary" id="startBtn">Comenzar Test</button>
     </div>
 
-    <!-- Preguntas -->
-    <div class="card questions" id="questionsCard">
-      <h2 style="font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);margin-bottom:8px">
-        Cuéntanos sobre tus aptitudes
-      </h2>
-      <p class="muted" style="margin-top:0;margin-bottom:16px">Responde 3 preguntas para obtener tu resultado.</p>
+    <div class="grid">
 
-      <div class="q-title">1) ¿Cuál de estas actividades te atrae más?</div>
-      <div class="option-group">
-        <div class="option"><input type="radio" id="q1a" name="q1" value="creativo"><label for="q1a">Crear</label></div>
-        <div class="option"><input type="radio" id="q1b" name="q1" value="analitico"><label for="q1b">Analizar</label></div>
-        <div class="option"><input type="radio" id="q1c" name="q1" value="social"><label for="q1c">Ayudar</label></div>
-        <div class="option"><input type="radio" id="q1d" name="q1" value="tecnico"><label for="q1d">Construir</label></div>
+      <!-- Main panel -->
+      <div class="panel">
+        <div class="topBar">
+          <div class="progressWrap">
+            <div class="progressLabel">
+              <span id="progLabel">Progress</span>
+              <span><span id="progNow">0</span> <span id="progOf">of</span> <span id="progTotal">10</span></span>
+            </div>
+            <div class="bar"><div id="barFill"></div></div>
+          </div>
+          <div class="stepChip" id="stepChip">0/10</div>
+        </div>
+
+        <div class="panelInner">
+
+          <!-- Screen: language intro (matches what you see now on Netlify, but styled) -->
+          <div class="screen show" id="screenLang">
+            <div class="h2" id="langTitle"># Select Your Language</div>
+            <div class="p" id="langSub">Choose the language for your vocational assessment</div>
+
+            <div class="hint" id="introTextWrap">
+              <div id="introTitle" style="font-weight:900;margin-bottom:6px;">How it works</div>
+              <div id="introText">Answer 10 questions by selecting the option that feels most like you. There are no right or wrong answers — just be honest.</div>
+              <div style="margin-top:10px;" id="introHighlight">
+                Your answers map to 5 vocational dimensions: Creative, Scientific, Social, Business, and Technical.
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" id="nameLabel">Your Full Name</label>
+              <input class="input" id="nameInput" type="text" placeholder="e.g. Maria Garcia" />
+            </div>
+
+            <div class="nav">
+              <button class="btn btnPrimary" id="btnStart">Start Test →</button>
+            </div>
+          </div>
+
+          <!-- Screen: questions -->
+          <div class="screen" id="screenQ">
+            <div class="qCard">
+              <div class="qText" id="qText">Question</div>
+              <div class="qHint" id="qHint">Select the option that best matches you</div>
+            </div>
+
+            <div class="answers" id="answers"></div>
+
+            <div class="nav">
+              <button class="btn btnGhost" id="btnPrev">← Back</button>
+              <button class="btn btnPrimary" id="btnNext">Next →</button>
+            </div>
+          </div>
+
+          <!-- Screen: results -->
+          <div class="screen" id="screenR">
+            <div class="reportHero" id="reportHero"></div>
+
+            <div class="reportGrid">
+              <div class="radarCard">
+                <div class="radarTitle">
+                  <b id="s02t">02 — APTITUDE MAP</b>
+                  <span id="s02h">Score Distribution</span>
+                </div>
+                <canvas id="radar" width="560" height="340"></canvas>
+              </div>
+
+              <div class="sections" id="sections"></div>
+            </div>
+
+            <div class="paywall" id="paywall"></div>
+
+            <div class="footer" id="rFooter">Career Aptitude Test · Orientation Report</div>
+
+            <div class="nav" style="margin-top:12px;">
+              <button class="btn btnGhost" id="btnRetake">← Retake</button>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <div class="q-title">2) ¿En qué ambiente prefieres trabajar?</div>
-      <div class="option-group">
-        <div class="option"><input type="radio" id="q2a" name="q2" value="oficina"><label for="q2a">Oficina</label></div>
-        <div class="option"><input type="radio" id="q2b" name="q2" value="exteriores"><label for="q2b">Exteriores</label></div>
-        <div class="option"><input type="radio" id="q2c" name="q2" value="taller"><label for="q2c">Taller</label></div>
-        <div class="option"><input type="radio" id="q2d" name="q2" value="flexible"><label for="q2d">Flexible</label></div>
+      <!-- Side panel -->
+      <div class="panel">
+        <div class="side">
+          <h3 id="sideTitle">What you’ll get</h3>
+          <p id="sideDesc">You’ll see your profile preview. The full report unlocks detailed sections and share/print options.</p>
+          <ul class="list">
+            <li class="li"><div class="dot"></div><div><b id="side1t">Primary + Secondary</b><br><span id="side1d">Clear vocational identity</span></div></li>
+            <li class="li"><div class="dot"></div><div><b id="side2t">Aptitude Map</b><br><span id="side2d">Radar distribution (0–10)</span></div></li>
+            <li class="li"><div class="dot"></div><div><b id="side3t">Careers</b><br><span id="side3d">Recommended paths that match you</span></div></li>
+            <li class="li"><div class="dot"></div><div><b id="side4t">Development Tips</b><br><span id="side4d">Actionable next steps</span></div></li>
+          </ul>
+          <p style="margin-top:12px;" id="sideNote">Tip: show the preview in ads and blur the details for conversions.</p>
+        </div>
       </div>
 
-      <div class="q-title">3) ¿Cuál es tu nivel de educación deseado?</div>
-      <div class="option-group">
-        <div class="option"><input type="radio" id="q3a" name="q3" value="tecnico"><label for="q3a">Técnico</label></div>
-        <div class="option"><input type="radio" id="q3b" name="q3" value="licenciatura"><label for="q3b">Licenciatura</label></div>
-        <div class="option"><input type="radio" id="q3c" name="q3" value="maestria"><label for="q3c">Maestría</label></div>
-        <div class="option"><input type="radio" id="q3d" name="q3" value="doctorado"><label for="q3d">Doctorado</label></div>
-      </div>
-
-      <button class="btn btn-primary" id="resultBtn">Ver Resultados</button>
-    </div>
-
-    <!-- Resultados -->
-    <div class="results" id="resultsCard">
-      <div id="resultsBody"></div>
-      <div id="paywall"></div>
     </div>
   </div>
 
-  <script>
-    // ====== State ======
-    let SESSION_ID = null;
-    let invitesEnabled = false;
+<script>
+/* =========================
+   COPY / DATA (from your snippet)
+   ========================= */
 
-    function $(id){ return document.getElementById(id); }
-
-    function createSessionId(){
-      SESSION_ID = crypto.randomUUID();
-      return SESSION_ID;
-    }
-
-    function startTest(){
-      const name = $("userName").value.trim();
-      if(!name){ alert("Ingresa tu nombre"); return; }
-      $("startCard").style.display = "none";
-      $("questionsCard").classList.add("show");
-    }
-
-    function computeCareer(q1){
-      if(q1 === "creativo") return { career:"Diseñador", desc:"Tu creatividad destaca y te impulsa a crear soluciones originales." };
-      if(q1 === "analitico") return { career:"Ingeniero", desc:"Tu mente analítica te permite resolver problemas complejos con lógica." };
-      if(q1 === "social") return { career:"Psicólogo", desc:"Tu empatía y comprensión de las personas puede guiar a otros." };
-      return { career:"Técnico", desc:"Tu enfoque práctico te hace excelente ejecutando y optimizando procesos." };
-    }
-
-    function requireAnswers(){
-      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
-      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
-      if(!q1 || !q2 || !q3) return null;
-      return { q1, q2, q3 };
-    }
-
-    function renderResults({q1,q2,q3}){
-      const { career, desc } = computeCareer(q1);
-      window._lastResults = { career, q1,q2,q3 };
-
-      $("questionsCard").classList.remove("show");
-      $("resultsCard").classList.add("show");
-
-      $("resultsBody").innerHTML = `
-        <div class="result-card">
-          <h2>${career}</h2>
-          <p>${desc}</p>
-          <div class="result-details">
-            <p><strong>Entorno preferido:</strong> ${q2}</p>
-            <p><strong>Educación deseada:</strong> ${q3}</p>
-            <p style="margin-top:10px;opacity:.92"><strong>Vista previa:</strong> Tu perfil sugiere 2–3 áreas recomendadas. Para verlas con detalle, desbloquea el reporte completo.</p>
-          </div>
-        </div>
-      `;
-
-      renderPaywall();
-    }
-
-    function renderPaywall(){
-      if(!SESSION_ID) createSessionId();
-
-      $("paywall").innerHTML = `
-        <div class="paywall">
-          <h3>Desbloquear Reporte Completo</h3>
-          <p>Pago único. No es suscripción. Transparencia total antes de pagar.</p>
-
-          <div class="legal">
-            <input type="checkbox" id="acceptLegal">
-            <div>
-              <div><strong>Acepto Términos, Privacidad y Reembolsos</strong></div>
-              <div class="small">Al pagar, confirmas que leíste las políticas. Este test ofrece orientación general y no sustituye asesoría profesional.</div>
-            </div>
-          </div>
-
-          <div class="plans">
-            <div class="plan">
-              <h4>Full Personalized Career Report</h4>
-              <div class="price">$7.99</div>
-              <ul class="features">
-                <li>Reporte completo y recomendaciones</li>
-                <li>Interpretación más detallada</li>
-                <li>Acceso inmediato después del pago</li>
-              </ul>
-              <div class="paypal-wrap" id="pp-full"></div>
-              <div class="status-line" id="msg-full"></div>
-            </div>
-
-            <div class="plan">
-              <div class="badge">DESCUENTO</div>
-              <h4>Share with 3 friends</h4>
-              <div class="price">$3.99</div>
-              <ul class="features">
-                <li>Igual que el reporte completo</li>
-                <li>Requiere registrar 3 invitaciones</li>
-                <li>Evita abuso: se valida en servidor</li>
-              </ul>
-
-              <div class="invite-box">
-                <div class="small"><strong>Invita 3 amigos por email</strong> (solo registramos invitaciones para habilitar descuento).</div>
-                <input id="e1" type="text" placeholder="Email 1">
-                <input id="e2" type="text" placeholder="Email 2">
-                <input id="e3" type="text" placeholder="Email 3">
-                <div class="invite-actions">
-                  <button class="btn-secondary" id="sendInvitesBtn">Registrar invitaciones</button>
-                  <span class="status-line" id="inviteMsg"></span>
-                </div>
-              </div>
-
-              <div class="paypal-wrap ${invitesEnabled ? "" : "disabled"}" id="pp-disc"></div>
-              <div class="status-line" id="msg-disc"></div>
-            </div>
-          </div>
-
-          <div class="status-line" id="payGlobalMsg" style="margin-top:14px"></div>
-        </div>
-      `;
-
-      $("sendInvitesBtn").addEventListener("click", onSendInvites);
-
-      initPayPalButtons();
-      setDiscountEnabled(invitesEnabled);
-    }
-
-    function setDiscountEnabled(on){
-      invitesEnabled = !!on;
-      const disc = $("pp-disc");
-      if(!disc) return;
-      disc.classList.toggle("disabled", !invitesEnabled);
-    }
-
-    function legalAccepted(){
-      return $("acceptLegal") && $("acceptLegal").checked;
-    }
-
-    async function createOrder(tier){
-      const res = await fetch("/.netlify/functions/paypal-create-order", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ session_id: SESSION_ID, tier })
-      });
-      const data = await res.json();
-      if(!res.ok) throw new Error(data?.error || "No se pudo crear la orden.");
-      return data.id;
-    }
-
-    async function captureOrder(orderID, tier){
-      const res = await fetch("/.netlify/functions/paypal-capture-order", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ orderID, session_id: SESSION_ID, tier })
-      });
-      const data = await res.json();
-      if(!res.ok) throw new Error(data?.error || "No se pudo capturar el pago.");
-      return data;
-    }
-
-    function initPayPalButtons(){
-      // Full $7.99
-      paypal.Buttons({
-        createOrder: async () => {
-          if(!legalAccepted()) throw new Error("Debes aceptar Términos/Privacidad/Reembolsos.");
-          $("msg-full").textContent = "";
-          return await createOrder("FULL_7_99");
-        },
-        onApprove: async (data) => {
-          $("msg-full").textContent = "Procesando pago...";
-          try{
-            const out = await captureOrder(data.orderID, "FULL_7_99");
-            if(out.status === "COMPLETED"){
-              $("msg-full").innerHTML = '<span class="ok">✅ Pago exitoso. Reporte desbloqueado.</span>';
-              unlockReportUI();
-            } else {
-              $("msg-full").innerHTML = '<span class="err">⚠️ Pago no completado.</span>';
-            }
-          }catch(e){
-            $("msg-full").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
-          }
-        },
-        onError: (err) => {
-          $("msg-full").innerHTML = '<span class="err">❌ Error PayPal.</span>';
-          console.error(err);
-        }
-      }).render("#pp-full");
-
-      // Discount $3.99
-      paypal.Buttons({
-        createOrder: async () => {
-          if(!legalAccepted()) throw new Error("Debes aceptar Términos/Privacidad/Reembolsos.");
-          if(!invitesEnabled) throw new Error("Primero registra 3 invitaciones.");
-          $("msg-disc").textContent = "";
-          return await createOrder("DISC_3_99");
-        },
-        onApprove: async (data) => {
-          $("msg-disc").textContent = "Procesando pago...";
-          try{
-            const out = await captureOrder(data.orderID, "DISC_3_99");
-            if(out.status === "COMPLETED"){
-              $("msg-disc").innerHTML = '<span class="ok">✅ Pago exitoso con descuento. Reporte desbloqueado.</span>';
-              unlockReportUI();
-            } else {
-              $("msg-disc").innerHTML = '<span class="err">⚠️ Pago no completado.</span>';
-            }
-          }catch(e){
-            $("msg-disc").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
-          }
-        },
-        onError: (err) => {
-          $("msg-disc").innerHTML = '<span class="err">❌ Error PayPal.</span>';
-          console.error(err);
-        }
-      }).render("#pp-disc");
-    }
-
-    async function onSendInvites(){
-      try{
-        const emails = [ $("e1").value, $("e2").value, $("e3").value ].map(v => (v||"").trim());
-        if(emails.some(e => !e)) { $("inviteMsg").innerHTML = '<span class="err">Completa los 3 emails.</span>'; return; }
-
-        $("inviteMsg").textContent = "Registrando...";
-        const res = await fetch("/.netlify/functions/referral-invite", {
-          method:"POST",
-          headers:{ "Content-Type":"application/json" },
-          body: JSON.stringify({ session_id: SESSION_ID, emails })
-        });
-        const data = await res.json();
-        if(!res.ok) throw new Error(data?.error || "No se pudieron registrar las invitaciones.");
-
-        $("inviteMsg").innerHTML = '<span class="ok">✅ Listo. Descuento habilitado.</span>';
-        setDiscountEnabled(true);
-      }catch(e){
-        $("inviteMsg").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
+const COPY = {
+  en: {
+    hBadge: 'Career Assessment',
+    hTitle: 'Career Aptitude Assessment',
+    hSub: '10 questions to discover your vocational profile and ideal career paths.',
+    progLabel: 'Progress', progOf: 'of',
+    introTitle: 'How it works',
+    introText: 'Answer 10 questions by selecting the option that feels most like you. There are no right or wrong answers — just be honest.',
+    introHighlight: 'Your answers map to 5 vocational dimensions: Creative, Scientific, Social, Business, and Technical.',
+    nameLabel: 'Your Full Name', namePlaceholder: 'e.g. Maria Garcia',
+    btnStart: 'Start Test →', btnNext: 'Next →', btnPrev: '← Back',
+    btnFinish: 'View My Results →',
+    qHint: 'Select the option that best matches you',
+    rBadge: 'Test Completed',
+    rFooter: 'Career Aptitude Test · Orientation Report',
+    rRetake: '← Retake',
+    defaultName: 'Student',
+    dateLocale: 'en-US',
+    labels: { C:'Creative', S:'Scientific', H:'Social', B:'Business', T:'Technical' },
+    radarNames: ['CREATIVE','SCIENTIFIC','SOCIAL','BUSINESS','TECHNICAL'],
+    primary: 'Primary', secondary: 'Secondary',
+    sections: {
+      s01t:'01 — YOUR VOCATIONAL PROFILE', s01h:'Overview',
+      s02t:'02 — APTITUDE MAP', s02h:'Score Distribution',
+      s03t:'03 — YOUR PRIMARY ORIENTATION',
+      s04t:'04 — YOUR PERSONALITY IN ACTION', s04h:'How You Think, Learn & Create',
+      s05t:'05 — YOUR STRENGTHS', s05h:'Natural Talents',
+      s06t:'06 — WATCH OUT FOR', s06h:'Potential Challenges',
+      s07t:'07 — RECOMMENDED CAREERS', s07h:'Paths That Match Your Profile',
+      s08t:'08 — IDEAL STUDY ENVIRONMENT', s08h:'',
+      s09t:'09 — DEVELOPMENT TIPS', s09h:'Advice for Your Journey',
+      s10t:'10 — YOUR IDENTITY', s10h:'Who You Are'
+    },
+    summaryAnchored: (name,pri,sec,eq) => `<strong>${name}</strong> shows a vocational profile anchored in the <strong>${pri}</strong> dimension${eq?`, with equally strong <strong>${sec}</strong> aptitude`:`, supported by a secondary <strong>${sec}</strong> orientation`}.`,
+    summaryHigh: 'This is a highly focused vocational identity — you know what drives you.',
+    summaryMed: 'A balanced profile with clear preferences and room to explore.',
+    summaryLow: 'A versatile profile — you\'re curious about many fields, which is a strength.',
+    secDepth: (sec,desc) => `Your secondary <strong>${sec}</strong> dimension adds depth: ${desc}`,
+    devTip1: (s) => `<strong>Lean into your ${s} passion</strong> — choose a major and extracurriculars that let you practice these skills daily.`,
+    devTip2: (s,v) => `<strong>Explore your ${s} side</strong> (score: ${v}/10) — even if it's not your top dimension, it could complement your primary path in surprising ways.`,
+    devTip3: '<strong>Talk to professionals</strong> — reach out to people working in fields you\'re considering. Real conversations are worth more than any test.',
+    finalIs: (name,pri,sec,id) => `<strong>${name}</strong> has a <strong>${pri}-${sec}</strong> vocational profile — ${id}`,
+    shareTitle: 'Share Your Results', shareSub: 'Print or share your vocational profile.',
+    sharePrint: 'Print / PDF', shareWhatsapp: 'Share via WhatsApp',
+    shareWABody: (name,pri,sec,ps,ss,summary) => `🎓 *Career Aptitude Test*%0A%0A👤 *${name}*%0A🏆 Primary: *${pri}* (${ps}/10)%0A🥈 Secondary: *${sec}* (${ss}/10)%0A%0A${summary}%0A%0A✅ Take the test yourself!%0A🔗 ${location.origin}/`,
+    questions: [
+      { q:"On a free Saturday, I'd rather…", a:[
+        {text:"Draw, write, play music, or work on a creative project",style:"C"},
+        {text:"Watch a documentary, do experiments, or research something fascinating",style:"S"},
+        {text:"Volunteer, help a friend with a problem, or organize a group activity",style:"H"},
+        {text:"Work on a business idea, sell something, or plan an event",style:"B"},
+        {text:"Build or fix something with my hands, code, or tinker with gadgets",style:"T"}
+      ]},
+      { q:"In a group project at school, I naturally…", a:[
+        {text:"Come up with the concept, design, and visual presentation",style:"C"},
+        {text:"Do the research, analyze data, and make sure facts are correct",style:"S"},
+        {text:"Make sure everyone is included and resolve any conflicts",style:"H"},
+        {text:"Take charge, delegate tasks, and keep the team on deadline",style:"B"},
+        {text:"Handle the technical parts — spreadsheets, tools, or building the prototype",style:"T"}
+      ]},
+      { q:"The subject I enjoy most (or would enjoy most) is…", a:[
+        {text:"Art, music, literature, film, or creative writing",style:"C"},
+        {text:"Biology, chemistry, physics, or mathematics",style:"S"},
+        {text:"Psychology, sociology, history, or philosophy",style:"H"},
+        {text:"Economics, business, law, or political science",style:"B"},
+        {text:"Computer science, engineering, robotics, or shop class",style:"T"}
+      ]},
+      { q:"When I imagine my future career, I see myself…", a:[
+        {text:"Expressing ideas through design, art, writing, or performance",style:"C"},
+        {text:"Discovering things — researching, experimenting, solving mysteries",style:"S"},
+        {text:"Helping people directly — teaching, counseling, healing, or advocating",style:"H"},
+        {text:"Leading a company, managing projects, or closing deals",style:"B"},
+        {text:"Building things — coding apps, designing systems, or engineering solutions",style:"T"}
+      ]},
+      { q:"I feel most accomplished when I…", a:[
+        {text:"Create something original that others appreciate",style:"C"},
+        {text:"Figure out how or why something works",style:"S"},
+        {text:"Make someone's day better or help solve a personal problem",style:"H"},
+        {text:"Achieve a goal, win a competition, or earn money from my efforts",style:"B"},
+        {text:"Complete a hands-on project or make something work properly",style:"T"}
+      ]},
+      { q:"My friends would describe me as…", a:[
+        {text:"Imaginative, original, and a bit of a dreamer",style:"C"},
+        {text:"Curious, analytical, and always asking 'why?'",style:"S"},
+        {text:"Empathetic, a good listener, and someone people trust",style:"H"},
+        {text:"Ambitious, persuasive, and a natural leader",style:"B"},
+        {text:"Practical, resourceful, and great at fixing things",style:"T"}
+      ]},
+      { q:"If I could have any superpower, it would be…", a:[
+        {text:"The ability to bring any idea I imagine to life instantly",style:"C"},
+        {text:"The ability to understand any system or phenomenon completely",style:"S"},
+        {text:"The ability to heal anyone's emotional or physical pain",style:"H"},
+        {text:"The ability to convince anyone of anything",style:"B"},
+        {text:"The ability to build any machine or technology I can think of",style:"T"}
+      ]},
+      { q:"When learning something new, I prefer to…", a:[
+        {text:"Explore freely, experiment, and find my own creative approach",style:"C"},
+        {text:"Read deeply, take notes, analyze patterns, and ask tough questions",style:"S"},
+        {text:"Discuss with others, hear different perspectives, and connect it to people",style:"H"},
+        {text:"Focus on how to apply it practically to achieve a specific goal",style:"B"},
+        {text:"Get hands-on immediately — try it, test it, build it",style:"T"}
+      ]},
+      { q:"The kind of workplace I'd thrive in is…", a:[
+        {text:"A studio, gallery, or creative agency with flexible hours",style:"C"},
+        {text:"A lab, university, or research center surrounded by experts",style:"S"},
+        {text:"A school, hospital, NGO, or community organization",style:"H"},
+        {text:"A corporate office, startup, or my own business",style:"B"},
+        {text:"A workshop, tech company, construction site, or engineering firm",style:"T"}
+      ]},
+      { q:"The problem I'd most want to solve in the world is…", a:[
+        {text:"Making culture, art, and beauty more accessible to everyone",style:"C"},
+        {text:"Curing diseases, understanding the universe, or advancing science",style:"S"},
+        {text:"Reducing inequality, improving education, or fighting injustice",style:"H"},
+        {text:"Creating economic opportunities and building thriving businesses",style:"B"},
+        {text:"Building better infrastructure, technology, or sustainable systems",style:"T"}
+      ]}
+    ],
+    profiles: {
+      C:{ title:'The Creative / Artistic', desc:'You are driven by the need to express, create, and bring ideas to life.',
+        dna:'You think in non-linear ways — connecting ideas that others don\'t see.',
+        strengths:['Original thinking','Visual/spatial intelligence','Emotional expression','Aesthetic sensitivity','Storytelling ability','Creative problem-solving'],
+        blindspots:['May struggle with rigid structure','Can procrastinate on "boring" tasks','May undervalue commercial viability','Sensitive to criticism of creative work'],
+        careers:[
+          {name:'Graphic Design',sub:'Branding, UX/UI, web design'},
+          {name:'Architecture',sub:'Building + artistic vision'},
+          {name:'Film & Media',sub:'Directing, production, animation'},
+          {name:'Marketing Creative',sub:'Content, copywriting, campaigns'},
+          {name:'Music / Performing Arts',sub:'Performance, composition, production'},
+          {name:'Fashion Design',sub:'Textile, styling, product design'}
+        ],
+        environment:'You thrive in flexible, visually stimulating environments with minimal bureaucracy.'
+      },
+      S:{ title:'The Scientific / Investigative', desc:'You are driven by curiosity, evidence, and the desire to understand how things work.',
+        dna:'You think analytically and systematically.',
+        strengths:['Analytical reasoning','Research methodology','Critical thinking','Pattern recognition','Data interpretation','Intellectual persistence'],
+        blindspots:['May overthink decisions','Can seem detached','Perfectionism can slow progress'],
+        careers:[
+          {name:'Medicine',sub:'Doctor, researcher, specialist'},
+          {name:'Data Science / AI',sub:'Machine learning, analytics'},
+          {name:'Biotechnology',sub:'Genetics, pharma, bioengineering'},
+          {name:'Physics / Mathematics',sub:'Research, academia, applied science'},
+          {name:'Environmental Science',sub:'Climate, ecology, sustainability'},
+          {name:'Psychology (Research)',sub:'Neuroscience, cognitive science'}
+        ],
+        environment:'You thrive in intellectual environments with labs, libraries, and peers who challenge your thinking.'
+      },
+      H:{ title:'The Social / Humanitarian', desc:'You are driven by the desire to help, heal, educate, and connect with others.',
+        dna:'You think empathetically — always considering how others feel.',
+        strengths:['Empathy & emotional intelligence','Active listening','Conflict resolution','Teaching & mentoring','Community building','Cultural sensitivity'],
+        blindspots:['May absorb others\' stress','Risk of burnout'],
+        careers:[
+          {name:'Medicine (Clinical)',sub:'Doctor, nurse, therapist'},
+          {name:'Psychology (Clinical)',sub:'Counselor, therapist, coach'},
+          {name:'Education',sub:'Teacher, professor, curriculum designer'},
+          {name:'Social Work',sub:'Community development, NGOs'},
+          {name:'Law (Human Rights)',sub:'Advocacy, public interest, policy'},
+          {name:'International Relations',sub:'Diplomacy, development, humanitarian aid'}
+        ],
+        environment:'You thrive in collaborative, people-centered environments.'
+      },
+      B:{ title:'The Business / Enterprising', desc:'You are driven by achievement, influence, and the thrill of turning ideas into reality.',
+        dna:'You think strategically — weighing costs, benefits, and advantage.',
+        strengths:['Strategic thinking','Persuasion & negotiation','Decision-making','Financial literacy','Leadership presence','Opportunity recognition'],
+        blindspots:['May prioritize winning','Can be impatient with process'],
+        careers:[
+          {name:'Business Administration',sub:'Management, consulting, operations'},
+          {name:'Entrepreneurship',sub:'Startups, product development'},
+          {name:'Finance',sub:'Investment banking, venture capital'},
+          {name:'Marketing & Sales',sub:'Strategy, brand management'},
+          {name:'Law (Corporate)',sub:'M&A, contracts, compliance'},
+          {name:'International Business',sub:'Trade, imports/exports, global strategy'}
+        ],
+        environment:'You thrive in competitive, fast-paced environments with clear goals and rewards.'
+      },
+      T:{ title:'The Technical / Practical', desc:'You are driven by the satisfaction of building, fixing, and making things work.',
+        dna:'You think in systems and processes — how parts connect to make a whole.',
+        strengths:['Hands-on problem-solving','Systems thinking','Technical precision','Spatial reasoning','Logical troubleshooting','Practical efficiency'],
+        blindspots:['May undervalue soft skills','May resist change if current system works'],
+        careers:[
+          {name:'Software Engineering',sub:'Full-stack, mobile, DevOps'},
+          {name:'Civil Engineering',sub:'Infrastructure, construction'},
+          {name:'Industrial Engineering',sub:'Manufacturing, optimization'},
+          {name:'Cybersecurity',sub:'Network security, ethical hacking'},
+          {name:'Mechanical Engineering',sub:'Automotive, aerospace, robotics'},
+          {name:'IT & Systems',sub:'Cloud, databases, network administration'}
+        ],
+        environment:'You thrive in hands-on environments with real problems to solve.'
       }
+    },
+    identity: {
+      'CS':'a creative scientist who blends artistic vision with analytical rigor.',
+      'CH':'an empathetic creator who uses art and design to uplift people.',
+      'CB':'a creative entrepreneur who turns original ideas into profitable ventures.',
+      'CT':'a design engineer who merges aesthetics with technical precision.',
+      'SC':'a visionary researcher who approaches science with creative intuition.',
+      'SH':'a compassionate scientist who uses knowledge to help humanity.',
+      'SB':'a data-driven strategist who turns research into business advantage.',
+      'ST':'a technical researcher who bridges theory and practical application.',
+      'HC':'an artistic healer who uses creativity to connect and inspire.',
+      'HS':'an evidence-based helper who combines empathy with scientific rigor.',
+      'HB':'a social entrepreneur who builds organizations that change lives.',
+      'HT':'a practical humanitarian who builds systems that serve people.',
+      'BC':'an innovative business leader who brings creativity to strategy.',
+      'BS':'an analytical entrepreneur who makes decisions backed by data.',
+      'BH':'a purpose-driven leader who builds businesses that serve communities.',
+      'BT':'a technical business leader who scales operations through technology.',
+      'TC':'a creative technologist who builds beautiful, functional solutions.',
+      'TS':'a scientific engineer who pushes the boundaries of what\'s possible.',
+      'TH':'a technology humanist who builds tools that empower people.',
+      'TB':'a tech entrepreneur who turns engineering skills into business success.',
+      'default':'a versatile person with diverse aptitudes ready to explore many paths.'
     }
+  },
 
-    function unlockReportUI(){
-      // Aquí tú puedes mostrar el “Full report” real.
-      // Por ahora: mensaje claro.
-      $("payGlobalMsg").innerHTML = '<span class="ok">✅ Desbloqueado: ahora muestra aquí el reporte completo (gráficos, recomendaciones, PDF).</span>';
-    }
+  es: {
+    hBadge: 'Test Vocacional',
+    hTitle: 'Test de Aptitud Vocacional',
+    hSub: '10 preguntas para descubrir tu perfil vocacional y las carreras ideales para ti.',
+    progLabel: 'Progreso', progOf: 'de',
+    introTitle: 'Cómo funciona',
+    introText: 'Responde 10 preguntas seleccionando la opción que más se parece a ti. No hay respuestas correctas ni incorrectas — solo sé honesto.',
+    introHighlight: 'Tus respuestas se mapean a 5 dimensiones: Creativo, Científico, Social, Negocios y Técnico.',
+    nameLabel: 'Tu Nombre Completo', namePlaceholder: 'ej. María García',
+    btnStart: 'Comenzar Test →', btnNext: 'Siguiente →', btnPrev: '← Atrás',
+    btnFinish: 'Ver Mis Resultados →',
+    qHint: 'Selecciona la opción que más se parece a ti',
+    rBadge: 'Test Completado',
+    rFooter: 'Test de Aptitud Vocacional · Reporte de Orientación',
+    rRetake: '← Hacer el Test de Nuevo',
+    defaultName: 'Estudiante',
+    dateLocale: 'es-ES',
+    labels: { C:'Creativo', S:'Científico', H:'Social', B:'Negocios', T:'Técnico' },
+    radarNames: ['CREATIVO','CIENTÍFICO','SOCIAL','NEGOCIOS','TÉCNICO'],
+    primary: 'Primario', secondary: 'Secundario',
+    sections: {
+      s01t:'01 — TU PERFIL VOCACIONAL', s01h:'Panorama General',
+      s02t:'02 — MAPA DE APTITUDES', s02h:'Distribución de Puntajes',
+      s03t:'03 — TU ORIENTACIÓN PRINCIPAL',
+      s04t:'04 — TU PERSONALIDAD EN ACCIÓN', s04h:'Cómo Piensas, Aprendes y Creas',
+      s05t:'05 — TUS FORTALEZAS', s05h:'Talentos Naturales',
+      s06t:'06 — PUNTOS DE ATENCIÓN', s06h:'Desafíos Potenciales',
+      s07t:'07 — CARRERAS RECOMENDADAS', s07h:'Caminos que Encajan con Tu Perfil',
+      s08t:'08 — AMBIENTE IDEAL DE ESTUDIO', s08h:'',
+      s09t:'09 — CONSEJOS DE DESARROLLO', s09h:'Para Tu Camino',
+      s10t:'10 — TU IDENTIDAD', s10h:'Quién Eres'
+    },
+    summaryAnchored: (name,pri,sec,eq) => `<strong>${name}</strong> muestra un perfil vocacional anclado en la dimensión <strong>${pri}</strong>${eq?`, con aptitud igualmente fuerte en <strong>${sec}</strong>`:`, apoyado por una orientación secundaria <strong>${sec}</strong>`}.`,
+    summaryHigh: 'Este es un perfil altamente enfocado — sabes lo que te impulsa.',
+    summaryMed: 'Un perfil equilibrado con preferencias claras y espacio para explorar.',
+    summaryLow: 'Un perfil versátil — curiosidad por muchos campos es una fortaleza.',
+    secDepth: (sec,desc) => `Tu dimensión secundaria <strong>${sec}</strong> agrega profundidad: ${desc}`,
+    devTip1: (s) => `<strong>Apóyate en tu pasión ${s}</strong> — elige una carrera y actividades que te permitan practicar estas habilidades a diario.`,
+    devTip2: (s,v) => `<strong>Explora tu lado ${s}</strong> (puntaje: ${v}/10) — aunque no sea tu dimensión principal, puede complementar tu camino.`,
+    devTip3: '<strong>Habla con profesionales</strong> — las conversaciones reales valen más que cualquier test.',
+    finalIs: (name,pri,sec,id) => `<strong>${name}</strong> tiene un perfil <strong>${pri}-${sec}</strong> — ${id}`,
+    shareTitle: 'Comparte Tus Resultados', shareSub: 'Imprime o comparte tu perfil vocacional.',
+    sharePrint: 'Imprimir / PDF', shareWhatsapp: 'Compartir por WhatsApp',
+    shareWABody: (name,pri,sec,ps,ss,summary) => `🎓 *Test de Aptitud Vocacional*%0A%0A👤 *${name}*%0A🏆 Primario: *${pri}* (${ps}/10)%0A🥈 Secundario: *${sec}* (${ss}/10)%0A%0A${summary}%0A%0A✅ ¡Haz el test tú también!%0A🔗 ${location.origin}/`,
+    questions: (COPY.en.questions), // same structure
+    profiles: (COPY.en.profiles),
+    identity: (COPY.en.identity)
+  }
+};
 
-    // ====== Bindings ======
-    $("startBtn").addEventListener("click", startTest);
-    $("resultBtn").addEventListener("click", () => {
-      const ans = requireAnswers();
-      if(!ans){ alert("Completa todas las preguntas"); return; }
-      renderResults(ans);
+/* =========================
+   App State
+   ========================= */
+
+let lang = 'en';
+let step = 0; // 0 intro, 1..10 questions, 11 results
+let soundOn = true;
+
+let userName = '';
+let answers = []; // {style:'C'|'S'|'H'|'B'|'T'}
+let scores = {C:0,S:0,H:0,B:0,T:0}; // 0..10
+
+let SESSION_ID = null;
+let discountEnabled = false;
+
+/* =========================
+   DOM
+   ========================= */
+const el = (id) => document.getElementById(id);
+
+const langEN = el('langEN');
+const langES = el('langES');
+const soundSwitch = el('soundSwitch');
+const soundLabel = el('soundLabel');
+
+const barFill = el('barFill');
+const progLabel = el('progLabel');
+const progOf = el('progOf');
+const progNow = el('progNow');
+const progTotal = el('progTotal');
+const stepChip = el('stepChip');
+
+const screenLang = el('screenLang');
+const screenQ = el('screenQ');
+const screenR = el('screenR');
+
+const hBadge = el('hBadge');
+const hTitle = el('hTitle');
+const hSub = el('hSub');
+
+const langTitle = el('langTitle');
+const langSub = el('langSub');
+const introTitle = el('introTitle');
+const introText = el('introText');
+const introHighlight = el('introHighlight');
+
+const nameLabel = el('nameLabel');
+const nameInput = el('nameInput');
+
+const btnStart = el('btnStart');
+const btnPrev = el('btnPrev');
+const btnNext = el('btnNext');
+
+const qText = el('qText');
+const qHint = el('qHint');
+const answersWrap = el('answers');
+
+const reportHero = el('reportHero');
+const radarCanvas = el('radar');
+const sectionsWrap = el('sections');
+const paywall = el('paywall');
+const rFooter = el('rFooter');
+const btnRetake = el('btnRetake');
+
+/* =========================
+   UX helpers (sound + transition)
+   ========================= */
+function beep(){
+  if(!soundOn) return;
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.value = 520;
+    g.gain.value = 0.04;
+    o.connect(g); g.connect(ctx.destination);
+    o.start();
+    setTimeout(()=>{ o.stop(); ctx.close(); }, 90);
+  }catch(e){}
+}
+
+function ensureSession(){
+  if(!SESSION_ID) SESSION_ID = crypto.randomUUID();
+  return SESSION_ID;
+}
+
+/* =========================
+   Render
+   ========================= */
+function applyCopy(){
+  const c = COPY[lang];
+
+  hBadge.textContent = c.hBadge;
+  hTitle.textContent = c.hTitle;
+  hSub.textContent = c.hSub;
+
+  progLabel.textContent = c.progLabel;
+  progOf.textContent = c.progOf;
+  progTotal.textContent = String(c.questions.length);
+
+  introTitle.textContent = c.introTitle;
+  introText.innerHTML = c.introText;
+  introHighlight.innerHTML = c.introHighlight;
+
+  nameLabel.textContent = c.nameLabel;
+  nameInput.placeholder = c.namePlaceholder;
+
+  btnStart.textContent = c.btnStart;
+  btnNext.textContent = c.btnNext;
+  btnPrev.textContent = c.btnPrev;
+
+  qHint.textContent = c.qHint;
+
+  rFooter.textContent = c.rFooter;
+  btnRetake.textContent = c.rRetake;
+
+  // Side text (simple, premium)
+  el('sideTitle').textContent = (lang==='en') ? 'What you’ll get' : 'Qué obtendrás';
+  el('sideDesc').textContent = (lang==='en')
+    ? 'You’ll see a full report preview: one section visible, the rest blurred until unlocked.'
+    : 'Verás un preview del reporte completo: una sección visible y el resto borroso hasta desbloquear.';
+  el('side1t').textContent = (lang==='en') ? 'Primary + Secondary' : 'Primario + Secundario';
+  el('side1d').textContent = (lang==='en') ? 'Clear vocational identity' : 'Identidad vocacional clara';
+  el('side2t').textContent = (lang==='en') ? 'Aptitude Map' : 'Mapa de Aptitudes';
+  el('side2d').textContent = (lang==='en') ? 'Radar distribution (0–10)' : 'Distribución radar (0–10)';
+  el('side3t').textContent = (lang==='en') ? 'Careers' : 'Carreras';
+  el('side3d').textContent = (lang==='en') ? 'Paths that match you' : 'Caminos que encajan contigo';
+  el('side4t').textContent = (lang==='en') ? 'Development Tips' : 'Consejos de Desarrollo';
+  el('side4d').textContent = (lang==='en') ? 'Actionable next steps' : 'Próximos pasos accionables';
+  el('sideNote').textContent = (lang==='en')
+    ? 'Tip: show the preview in ads and blur the detail for conversions.'
+    : 'Tip: muestra el preview en anuncios y borra el detalle para subir conversión.';
+}
+
+function setProgress(){
+  const total = COPY[lang].questions.length;
+  const now = Math.max(0, Math.min(step, total));
+  progNow.textContent = String(now);
+  stepChip.textContent = `${now}/${total}`;
+  const pct = (now / total) * 100;
+  barFill.style.width = pct + '%';
+}
+
+function showScreen(which){
+  screenLang.classList.remove('show');
+  screenQ.classList.remove('show');
+  screenR.classList.remove('show');
+  el(which).classList.add('show');
+}
+
+function renderQuestion(){
+  const c = COPY[lang];
+  const qIndex = step - 1; // step 1 => q0
+  const q = c.questions[qIndex];
+
+  qText.textContent = q.q;
+
+  // render answers
+  answersWrap.innerHTML = '';
+  q.a.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'ans';
+    if(answers[qIndex] && answers[qIndex].style === opt.style) div.classList.add('active');
+
+    div.innerHTML = `
+      <div class="dot"></div>
+      <div class="ansText">${opt.text}</div>
+      <div class="ansTag">${c.labels[opt.style]}</div>
+    `;
+
+    div.addEventListener('click', () => {
+      answers[qIndex] = { style: opt.style, text: opt.text };
+      [...answersWrap.children].forEach(x => x.classList.remove('active'));
+      div.classList.add('active');
+      beep();
     });
-  </script>
+
+    answersWrap.appendChild(div);
+  });
+
+  // Button label at last question
+  if(step === c.questions.length){
+    btnNext.textContent = c.btnFinish;
+  }else{
+    btnNext.textContent = c.btnNext;
+  }
+
+  btnPrev.style.display = (step <= 1) ? 'none' : 'inline-block';
+}
+
+/* =========================
+   Score + report builder
+   ========================= */
+function computeScores(){
+  scores = {C:0,S:0,H:0,B:0,T:0};
+  answers.forEach(a => { if(a?.style) scores[a.style] += 1; });
+  // Convert 0..10 to 0..10 (already 10 q)
+  // scores are counts. Keep as 0..10.
+  return scores;
+}
+
+function getPrimarySecondary(){
+  const c = COPY[lang];
+  const entries = Object.entries(scores).map(([k,v])=>({k,v}));
+  entries.sort((a,b)=> b.v - a.v);
+
+  const pri = entries[0];
+  const sec = entries[1];
+  const eq = (sec.v === pri.v);
+
+  // if equal, choose fixed rule: second stays second but mark eq
+  return {
+    priKey: pri.k,
+    secKey: sec.k,
+    priName: c.labels[pri.k],
+    secName: c.labels[sec.k],
+    priScore: pri.v,
+    secScore: sec.v,
+    eq
+  };
+}
+
+function profileText(key){
+  const p = COPY[lang].profiles[key];
+  return p || COPY.en.profiles[key];
+}
+
+function identityText(priKey, secKey){
+  const idKey = `${priKey}${secKey}`;
+  const map = COPY[lang].identity || COPY.en.identity;
+  return map[idKey] || map.default;
+}
+
+function summaryLine(name, priName, secName, eq){
+  const c = COPY[lang];
+  return c.summaryAnchored(name, priName, secName, eq);
+}
+
+function focusLabel(priScore){
+  const c = COPY[lang];
+  // heuristic:
+  if(priScore >= 7) return c.summaryHigh;
+  if(priScore >= 5) return c.summaryMed;
+  return c.summaryLow;
+}
+
+/* =========================
+   Radar drawing (canvas)
+   ========================= */
+function drawRadar(){
+  const c = COPY[lang];
+  const ctx = radarCanvas.getContext('2d');
+  const W = radarCanvas.width;
+  const H = radarCanvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  const cx = W/2;
+  const cy = H/2 + 10;
+  const R = Math.min(W,H)*0.34;
+
+  const axes = ['C','S','H','B','T'];
+  const names = c.radarNames;
+
+  // background rings
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  // helper colors
+  const ring = (alpha)=> `rgba(255,255,255,${alpha})`;
+  const grid = (alpha)=> `rgba(255,255,255,${alpha})`;
+
+  for(let i=1;i<=5;i++){
+    const r = (R/5)*i;
+    ctx.beginPath();
+    for(let a=0;a<axes.length;a++){
+      const ang = (-Math.PI/2) + a*(2*Math.PI/axes.length);
+      const x = r*Math.cos(ang);
+      const y = r*Math.sin(ang);
+      if(a===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = grid(0.10);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // axis lines + labels
+  axes.forEach((k, i) => {
+    const ang = (-Math.PI/2) + i*(2*Math.PI/axes.length);
+    const x = (R+12)*Math.cos(ang);
+    const y = (R+12)*Math.sin(ang);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(R*Math.cos(ang), R*Math.sin(ang));
+    ctx.strokeStyle = grid(0.12);
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // labels
+    ctx.font = "800 12px DM Sans";
+    ctx.fillStyle = ring(0.82);
+    ctx.textAlign = (Math.abs(Math.cos(ang))<0.2) ? "center" : (Math.cos(ang)>0 ? "left" : "right");
+    ctx.textBaseline = (Math.sin(ang)>0 ? "top" : "bottom");
+    ctx.fillText(names[i], x, y);
+  });
+
+  // data polygon
+  const vals = axes.map(k => scores[k]); // 0..10
+  ctx.beginPath();
+  axes.forEach((k, i) => {
+    const ang = (-Math.PI/2) + i*(2*Math.PI/axes.length);
+    const r = (R*(vals[i]/10));
+    const x = r*Math.cos(ang);
+    const y = r*Math.sin(ang);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+
+  // fill + stroke
+  const grad = ctx.createLinearGradient(-R,-R,R,R);
+  grad.addColorStop(0, "rgba(139,92,246,.35)");
+  grad.addColorStop(1, "rgba(244,114,182,.28)");
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  ctx.strokeStyle = "rgba(255,255,255,.55)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // points
+  axes.forEach((k,i)=>{
+    const ang = (-Math.PI/2) + i*(2*Math.PI/axes.length);
+    const r = (R*(vals[i]/10));
+    const x = r*Math.cos(ang);
+    const y = r*Math.sin(ang);
+    ctx.beginPath();
+    ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle = "rgba(255,255,255,.88)";
+    ctx.fill();
+  });
+
+  ctx.restore();
+}
+
+function scoreBoxesHTML(){
+  const c = COPY[lang];
+  const order = ['C','S','H','B','T'];
+  return `
+    <div class="scoreRow">
+      ${order.map(k=>{
+        const v = scores[k];
+        const pct = Math.round((v/10)*100);
+        return `
+          <div class="scoreBox">
+            <div class="k">${c.labels[k].toUpperCase()}</div>
+            <div class="v"><b>${v}</b><span>/10</span></div>
+            <div class="meter"><div style="width:${pct}%"></div></div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+/* =========================
+   Report sections (01-10) with preview blur
+   ========================= */
+function buildSections(primary, secondary, name){
+  const c = COPY[lang];
+  const priP = profileText(primary.priKey);
+  const secP = profileText(primary.secKey);
+
+  const secDepthDesc = secP.dna || secP.desc || '';
+  const identity = identityText(primary.priKey, primary.secKey);
+
+  // 1) Visible section 01 (full text visible)
+  const s01 = `
+    <div class="sec">
+      <div class="secHead">
+        <div>
+          <div class="t">${c.sections.s01t}</div>
+          <div class="h">${c.sections.s01h}</div>
+        </div>
+        <div class="lock">✅ Preview Visible</div>
+      </div>
+      <div class="content">
+        <div>${summaryLine(name, primary.priName, primary.secName, primary.eq)}</div>
+        <div style="margin-top:10px">${focusLabel(primary.priScore)}</div>
+        <div style="margin-top:10px">${c.secDepth(primary.secName, secDepthDesc)}</div>
+      </div>
+    </div>
+  `;
+
+  // Helper to create blurred sections
+  const blur = (title, header, innerHTML) => `
+    <div class="sec">
+      <div class="secHead">
+        <div>
+          <div class="t">${title}</div>
+          ${header ? `<div class="h">${header}</div>` : ''}
+        </div>
+        <div class="lock">🔒 Locked</div>
+      </div>
+
+      <div class="blurWrap">
+        <div class="blurContent content">
+          ${innerHTML}
+        </div>
+        <div class="blurOverlay">
+          <div>
+            <b>Unlock the full report</b>
+            <p>${lang==='en'
+              ? 'You can see the section titles. Detailed content unlocks after payment.'
+              : 'Puedes ver los títulos. El contenido detallado se desbloquea tras el pago.'
+            }</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 02 title is shown in radar card, but still include a section stub to match original numbering
+  const s02 = blur(c.sections.s02t, c.sections.s02h, `
+    <p>${lang==='en'
+      ? 'A breakdown of how your answers distribute across the 5 vocational dimensions.'
+      : 'Un desglose de cómo se distribuyen tus respuestas en las 5 dimensiones vocacionales.'
+    }</p>
+    ${scoreBoxesHTML()}
+  `);
+
+  const s03 = blur(c.sections.s03t, '', `
+    <p><strong>${primary.priName}</strong> — ${priP.desc}</p>
+    <p style="margin-top:10px">${priP.dna}</p>
+  `);
+
+  const s04 = blur(c.sections.s04t, c.sections.s04h, `
+    <p>${lang==='en'
+      ? 'How your mind tends to approach learning, creativity, and problem-solving, based on your profile.'
+      : 'Cómo tiendes a aprender, crear y resolver problemas, según tu perfil.'
+    }</p>
+    <ul>
+      <li>${lang==='en' ? 'Preferred learning style and pace' : 'Estilo de aprendizaje preferido y ritmo'}</li>
+      <li>${lang==='en' ? 'Motivators and focus triggers' : 'Motivadores y disparadores de enfoque'}</li>
+      <li>${lang==='en' ? 'How you decide under pressure' : 'Cómo decides bajo presión'}</li>
+    </ul>
+  `);
+
+  const s05 = blur(c.sections.s05t, c.sections.s05h, `
+    <p><strong>${lang==='en' ? 'Natural talents:' : 'Talentos naturales:'}</strong></p>
+    <ul>
+      ${(priP.strengths || []).slice(0,6).map(x=>`<li>${x}</li>`).join('')}
+    </ul>
+  `);
+
+  const s06 = blur(c.sections.s06t, c.sections.s06h, `
+    <p><strong>${lang==='en' ? 'Potential challenges:' : 'Desafíos potenciales:'}</strong></p>
+    <ul>
+      ${(priP.blindspots || []).slice(0,6).map(x=>`<li>${x}</li>`).join('')}
+    </ul>
+  `);
+
+  const s07 = blur(c.sections.s07t, c.sections.s07h, `
+    <p><strong>${lang==='en' ? 'Paths that match you:' : 'Caminos que encajan contigo:'}</strong></p>
+    <ul>
+      ${(priP.careers || []).slice(0,6).map(x=>`<li><strong>${x.name}</strong> — ${x.sub}</li>`).join('')}
+    </ul>
+  `);
+
+  const s08 = blur(c.sections.s08t, c.sections.s08h, `
+    <p>${priP.environment}</p>
+  `);
+
+  const s09 = blur(c.sections.s09t, c.sections.s09h, `
+    <p>${c.devTip1(primary.priName)}</p>
+    <p style="margin-top:10px">${c.devTip2(primary.secName, primary.secScore)}</p>
+    <p style="margin-top:10px">${c.devTip3}</p>
+  `);
+
+  const s10 = blur(c.sections.s10t, c.sections.s10h, `
+    <p>${c.finalIs(name, primary.priName, primary.secName, identity)}</p>
+  `);
+
+  // Return in order 01..10 (01 visible, others blurred)
+  return [s01, s02, s03, s04, s05, s06, s07, s08, s09, s10].join('');
+}
+
+/* =========================
+   Paywall + PayPal (Netlify Functions)
+   ========================= */
+function legalAccepted(){
+  return !!document.getElementById('acceptLegal')?.checked;
+}
+
+async function createOrder(tier){
+  ensureSession();
+  const res = await fetch('/.netlify/functions/paypal-create-order', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ session_id: SESSION_ID, tier })
+  });
+  const data = await res.json();
+  if(!res.ok) throw new Error(data?.error || 'Failed to create order');
+  if(!data?.id) throw new Error('Order id missing');
+  return data.id;
+}
+
+async function captureOrder(orderID, tier){
+  ensureSession();
+  const res = await fetch('/.netlify/functions/paypal-capture-order', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ orderID, session_id: SESSION_ID, tier })
+  });
+  const data = await res.json();
+  if(!res.ok) throw new Error(data?.error || 'Failed to capture order');
+  return data;
+}
+
+async function sendInvites(){
+  ensureSession();
+  const e1 = (document.getElementById('inv1')?.value || '').trim();
+  const e2 = (document.getElementById('inv2')?.value || '').trim();
+  const e3 = (document.getElementById('inv3')?.value || '').trim();
+  const msg = document.getElementById('inviteMsg');
+
+  msg.textContent = (lang==='en') ? 'Registering...' : 'Registrando...';
+  msg.className = 'msg';
+
+  if(!e1 || !e2 || !e3){
+    msg.innerHTML = `<span class="err">${lang==='en' ? 'Please fill the 3 emails.' : 'Completa los 3 emails.'}</span>`;
+    return;
+  }
+
+  const res = await fetch('/.netlify/functions/referral-invite', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ session_id: SESSION_ID, emails:[e1,e2,e3] })
+  });
+  const data = await res.json();
+
+  if(!res.ok){
+    msg.innerHTML = `<span class="err">❌ ${data?.error || (lang==='en' ? 'Invite registration failed' : 'Falló el registro')}</span>`;
+    return;
+  }
+
+  msg.innerHTML = `<span class="ok">✅ ${(lang==='en' ? 'Invites registered. Discount enabled.' : 'Invitaciones registradas. Descuento habilitado.')}</span>`;
+  discountEnabled = true;
+  const discWrap = document.getElementById('pp-disc');
+  discWrap?.classList.remove('disabled');
+}
+
+function unlockAll(){
+  // Remove blur overlays
+  document.querySelectorAll('.blurContent').forEach(n => n.style.filter = 'none');
+  document.querySelectorAll('.blurOverlay').forEach(n => n.style.display = 'none');
+  document.querySelectorAll('.lock').forEach(n => {
+    if(n.textContent.includes('Locked') || n.textContent.includes('🔒')) n.textContent = '✅ Unlocked';
+  });
+  const gm = document.getElementById('globalMsg');
+  if(gm) gm.innerHTML = `<span class="ok">✅ ${(lang==='en'?'Payment confirmed. Full report unlocked.':'Pago confirmado. Reporte completo desbloqueado.')}</span>`;
+}
+
+function renderPaywall(primaryInfo){
+  const c = COPY[lang];
+
+  const summary = summaryLine(userName, primaryInfo.priName, primaryInfo.secName, primaryInfo.eq);
+  const waBody = c.shareWABody(userName, primaryInfo.priName, primaryInfo.secName, primaryInfo.priScore, primaryInfo.secScore, summary.replace(/<\/?strong>/g,'*'));
+
+  paywall.innerHTML = `
+    <div class="payTitle">${lang==='en' ? 'Unlock Full Report' : 'Desbloquear Reporte Completo'}</div>
+    <div class="paySub">
+      ${lang==='en'
+        ? 'One-time payment. No subscription. You can preview section titles for free — details unlock after purchase.'
+        : 'Pago único. No suscripción. Puedes ver títulos gratis — el detalle se desbloquea tras comprar.'
+      }
+    </div>
+
+    <div class="legal">
+      <input type="checkbox" id="acceptLegal" />
+      <div>
+        <div style="font-weight:900">${lang==='en' ? 'I accept Terms, Privacy, and Refund Policy' : 'Acepto Términos, Privacidad y Reembolsos'}</div>
+        <small>
+          ${lang==='en'
+            ? 'This test provides general guidance and does not replace professional counseling.'
+            : 'Este test ofrece orientación general y no sustituye asesoría profesional.'
+          }
+          <br/>
+          <a href="/terms.html" target="_blank">Terms</a> ·
+          <a href="/privacy.html" target="_blank">Privacy</a> ·
+          <a href="/refunds.html" target="_blank">Refunds</a>
+        </small>
+      </div>
+    </div>
+
+    <div class="plans">
+      <div class="plan reco">
+        <h4>👉 Full Personalized Career Report</h4>
+        <div class="price">$7.99</div>
+        <div class="feat">
+          <ul>
+            <li>${lang==='en'?'Unlock all sections (01–10)':'Desbloquea todas las secciones (01–10)'}</li>
+            <li>${lang==='en'?'Print / PDF + share tools':'Imprimir / PDF + compartir'}</li>
+            <li>${lang==='en'?'Instant access after payment':'Acceso inmediato tras el pago'}</li>
+          </ul>
+        </div>
+        <div class="ppWrap" id="pp-full"></div>
+        <div class="msg" id="msg-full"></div>
+      </div>
+
+      <div class="plan">
+        <h4>👉 Share with 3 friends → Get Discount</h4>
+        <div class="price">$3.99</div>
+        <div class="feat">
+          <ul>
+            <li>${lang==='en'?'Same full report':'Mismo reporte completo'}</li>
+            <li>${lang==='en'?'Requires 3 invite registrations':'Requiere registrar 3 invitaciones'}</li>
+            <li>${lang==='en'?'Anti-abuse validation server-side':'Validación anti-abuso en servidor'}</li>
+          </ul>
+        </div>
+
+        <div class="inviteBox">
+          <div style="font-weight:900">${lang==='en'?'Register 3 emails':'Registra 3 emails'}</div>
+          <div class="msg" style="margin-top:6px">${lang==='en'?'We only use this to validate discount eligibility.':'Solo se usa para validar el descuento.'}</div>
+          <div class="row">
+            <input class="input" id="inv1" type="text" placeholder="Email 1" />
+            <input class="input" id="inv2" type="text" placeholder="Email 2" />
+            <input class="input" id="inv3" type="text" placeholder="Email 3" />
+          </div>
+          <button class="miniBtn" id="btnInvites">${lang==='en'?'Register invites':'Registrar invitaciones'}</button>
+          <div class="msg" id="inviteMsg"></div>
+        </div>
+
+        <div class="ppWrap disabled" id="pp-disc"></div>
+        <div class="msg" id="msg-disc"></div>
+      </div>
+    </div>
+
+    <div class="shareRow">
+      <div>
+        <div style="font-weight:900">${c.shareTitle}</div>
+        <div class="msg" style="margin-top:4px">${c.shareSub}</div>
+      </div>
+      <div class="shareBtns">
+        <button class="shareBtn" id="btnPrint">${c.sharePrint}</button>
+        <button class="shareBtn" id="btnWA">${c.shareWhatsapp}</button>
+      </div>
+    </div>
+
+    <div class="msg" id="globalMsg"></div>
+  `;
+
+  // binds
+  document.getElementById('btnInvites').addEventListener('click', sendInvites);
+  document.getElementById('btnPrint').addEventListener('click', () => window.print());
+  document.getElementById('btnWA').addEventListener('click', () => window.open(`https://wa.me/?text=${waBody}`, '_blank'));
+
+  // PayPal buttons
+  paypal.Buttons({
+    createOrder: async () => {
+      if(!legalAccepted()) throw new Error(lang==='en' ? 'Please accept Terms/Privacy/Refunds first.' : 'Debes aceptar Términos/Privacidad/Reembolsos.');
+      el('msg-full').textContent = '';
+      return await createOrder('FULL_7_99');
+    },
+    onApprove: async (data) => {
+      el('msg-full').textContent = (lang==='en'?'Processing...':'Procesando...');
+      try{
+        const out = await captureOrder(data.orderID, 'FULL_7_99');
+        if(out.status === 'COMPLETED'){
+          el('msg-full').innerHTML = `<span class="ok">✅ ${(lang==='en'?'Payment completed.':'Pago completado.')}</span>`;
+          unlockAll();
+        }else{
+          el('msg-full').innerHTML = `<span class="warn">⚠️ ${(lang==='en'?'Payment not completed.':'Pago no completado.')}</span>`;
+        }
+      }catch(e){
+        el('msg-full').innerHTML = `<span class="err">❌ ${e.message}</span>`;
+      }
+    },
+    onError: (err) => {
+      console.error(err);
+      el('msg-full').innerHTML = `<span class="err">❌ ${(lang==='en'?'PayPal error.':'Error de PayPal.')}</span>`;
+    }
+  }).render('#pp-full');
+
+  paypal.Buttons({
+    createOrder: async () => {
+      if(!legalAccepted()) throw new Error(lang==='en' ? 'Please accept Terms/Privacy/Refunds first.' : 'Debes aceptar Términos/Privacidad/Reembolsos.');
+      if(!discountEnabled) throw new Error(lang==='en' ? 'Register 3 invites first.' : 'Primero registra 3 invitaciones.');
+      el('msg-disc').textContent = '';
+      return await createOrder('DISC_3_99');
+    },
+    onApprove: async (data) => {
+      el('msg-disc').textContent = (lang==='en'?'Processing...':'Procesando...');
+      try{
+        const out = await captureOrder(data.orderID, 'DISC_3_99');
+        if(out.status === 'COMPLETED'){
+          el('msg-disc').innerHTML = `<span class="ok">✅ ${(lang==='en'?'Discount payment completed.':'Pago con descuento completado.')}</span>`;
+          unlockAll();
+        }else{
+          el('msg-disc').innerHTML = `<span class="warn">⚠️ ${(lang==='en'?'Payment not completed.':'Pago no completado.')}</span>`;
+        }
+      }catch(e){
+        el('msg-disc').innerHTML = `<span class="err">❌ ${e.message}</span>`;
+      }
+    },
+    onError: (err) => {
+      console.error(err);
+      el('msg-disc').innerHTML = `<span class="err">❌ ${(lang==='en'?'PayPal error.':'Error de PayPal.')}</span>`;
+    }
+  }).render('#pp-disc');
+}
+
+/* =========================
+   Render results
+   ========================= */
+function renderResults(){
+  const c = COPY[lang];
+  computeScores();
+  const pri = getPrimarySecondary();
+  const name = userName || c.defaultName;
+
+  // hero
+  reportHero.innerHTML = `
+    <div class="reportHeroTop">
+      <div class="rBadge">✅ ${c.rBadge}</div>
+      <div class="rBadge">${c.primary}: <b style="margin-left:6px">${pri.priName}</b> (${pri.priScore}/10)</div>
+      <div class="rBadge">${c.secondary}: <b style="margin-left:6px">${pri.secName}</b> (${pri.secScore}/10)</div>
+    </div>
+    <h2>${name}</h2>
+    <div class="summary">${summaryLine(name, pri.priName, pri.secName, pri.eq)}<br/><span style="color:rgba(255,255,255,.78)">${focusLabel(pri.priScore)}</span></div>
+    ${scoreBoxesHTML()}
+  `;
+
+  // update section headers in UI
+  el('s02t').textContent = c.sections.s02t;
+  el('s02h').textContent = c.sections.s02h;
+
+  // sections 01..10 (preview logic)
+  sectionsWrap.innerHTML = buildSections(pri, pri, name);
+
+  // radar
+  drawRadar();
+
+  // paywall
+  renderPaywall(pri);
+}
+
+/* =========================
+   Navigation
+   ========================= */
+function goIntro(){
+  step = 0;
+  setProgress();
+  showScreen('screenLang');
+  beep();
+}
+
+function goQuestion(n){
+  step = n;
+  setProgress();
+  showScreen('screenQ');
+  renderQuestion();
+  beep();
+}
+
+function goResults(){
+  step = COPY[lang].questions.length;
+  setProgress();
+  showScreen('screenR');
+  renderResults();
+  beep();
+}
+
+btnStart.addEventListener('click', () => {
+  userName = (nameInput.value || '').trim();
+  if(!userName) userName = COPY[lang].defaultName;
+  answers = [];
+  ensureSession();
+  goQuestion(1);
+});
+
+btnPrev.addEventListener('click', () => {
+  if(step <= 1) return;
+  goQuestion(step-1);
+});
+
+btnNext.addEventListener('click', () => {
+  const total = COPY[lang].questions.length;
+  const qIndex = step - 1;
+
+  if(!answers[qIndex] || !answers[qIndex].style){
+    alert(lang==='en' ? 'Please select an option.' : 'Selecciona una opción.');
+    return;
+  }
+
+  if(step >= total){
+    goResults();
+  }else{
+    goQuestion(step+1);
+  }
+});
+
+btnRetake.addEventListener('click', () => {
+  // reset
+  SESSION_ID = null;
+  discountEnabled = false;
+  answers = [];
+  scores = {C:0,S:0,H:0,B:0,T:0};
+  nameInput.value = '';
+  goIntro();
+});
+
+/* =========================
+   Language + sound
+   ========================= */
+function setLang(next){
+  lang = next;
+  langEN.classList.toggle('active', lang==='en');
+  langES.classList.toggle('active', lang==='es');
+  applyCopy();
+
+  // keep current screen but re-render text
+  if(step === 0){
+    // intro screen only
+  }else if(step >= 1 && step <= COPY[lang].questions.length){
+    renderQuestion();
+  }else{
+    renderResults();
+  }
+}
+
+langEN.addEventListener('click', () => setLang('en'));
+langES.addEventListener('click', () => setLang('es'));
+
+soundSwitch.addEventListener('click', () => {
+  soundOn = !soundOn;
+  soundSwitch.classList.toggle('on', soundOn);
+  soundLabel.textContent = soundOn ? 'ON' : 'OFF';
+  beep();
+});
+
+/* =========================
+   Init
+   ========================= */
+applyCopy();
+goIntro();
+</script>
 </body>
 </html>
