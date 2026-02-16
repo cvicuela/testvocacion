@@ -1,109 +1,478 @@
-h<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Vocacional</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Vocacional</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <style></style></title>
-  </head>
-  :root {--navy:#1b1464;--dark-blue:#2d1b8e;--accent:#6c5ce7;--pink:#fda7df;--green:#2dd4bf;--green-light:#ccfbf1;--card:#fff;--bg:#f9fafb;--border:#e5e7eb;--text:#1f2937;--text-light:#6b7280;--shadow:0 4px 6px rgba(0,0,0,.07)}
-  * {margin:0;padding:0;box-sizing:border-box}
-  body {font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#f9fafb 0%,#f3f4f6 100%);color:var(--text)}
-  .container {max-width:1200px;margin:0 auto;padding:20px}
-  header {text-align:center;padding:60px 20px 40px;background:linear-gradient(135deg,var(--navy) 0%,var(--dark-blue) 100%);color:#fff;border-radius:20px;margin-bottom:40px;box-shadow:var(--shadow)}
-  header h1 {font-family:'Playfair Display',serif;font-size:48px;font-weight:700}
-  .form-section {background:var(--card);padding:40px;border-radius:16px;box-shadow:var(--shadow);margin:0 auto 30px;max-width:600px}
-  label {display:block;margin-bottom:8px;font-weight:600;color:var(--navy)}
-  input[type="text"],select {width:100%;padding:12px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif}
-  input[type="text"]:focus,select:focus {outline:0;border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,92,231,.1)}
-  .questions-section {background:var(--card);padding:40px;border-radius:16px;box-shadow:var(--shadow);margin-bottom:30px;display:none}
-  .questions-section.show {display:block}
-  .question-title {font-size:18px;font-weight:600;color:var(--navy);margin-bottom:16px}
-  .option-group {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:32px}
-  .option input[type="radio"] {display:none}
-  .option label {padding:12px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;text-align:center;font-weight:500;background:#fff}
-  .option input[type="radio"]:checked+label {border-color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(253,167,223,.1));color:var(--accent)}
-  button {padding:14px 32px;border:0;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;transition:all .3s}
-  .btn-primary {background:linear-gradient(135deg,var(--navy),var(--dark-blue));color:#fff;width:100%;margin-top:20px}
-  .btn-primary:hover {box-shadow:0 6px 20px rgba(27,20,100,.3)}
-  .results-section {background:var(--card);padding:40px;border-radius:16px;box-shadow:var(--shadow);display:none}
-  .results-section.show {display:block}
-  .result-card {background:linear-gradient(135deg,var(--accent),var(--pink));color:#fff;padding:30px;border-radius:12px;margin-bottom:20px;text-align:center}
-  .result-details {margin-top:20px;text-align:left;background:rgba(255,255,255,.1);padding:20px;border-radius:10px}
-  .paywall-section {background:var(--card);border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-top:28px}
-  .paywall-section h3 {font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);text-align:center;margin-bottom:8px}
-  .paywall-section>p {color:var(--text-light);text-align:center;margin-bottom:28px}
-  .paywall-plans {display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
-  .plan {border:1.5px solid var(--border);border-radius:12px;padding:24px;background:#fff}
-  .plan:hover {border-color:var(--accent);box-shadow:0 8px 24px rgba(108,92,231,.15);transform:translateY(-4px)}
-  .premium-plan {border-color:var(--accent);background:linear-gradient(135deg,rgba(108,92,231,.03) 0%,rgba(253,167,223,.03) 100%)}
-  .plan-badge {position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:4px 16px;border-radius:100px;font-size:11px;font-weight:700}
-  .plan-header h4 {font-size:18px;font-weight:600;color:var(--navy);margin-bottom:6px}
-  .price {font-size:28px;font-weight:700;color:var(--accent)}
-  .plan-features {list-style:none;margin:20px 0}
-  .plan-features li {padding:8px 0;font-size:13px;color:var(--text);border-bottom:1px solid var(--bg)}
-  .plan-features li:last-child {border-bottom:0}
-  .btn-paypal {width:100%;padding:14px;border:0;border-radius:10px;font-family:'DM Sans',sans-serif;color:#fff;cursor:pointer;margin-top:10px}
-  .btn-paypal.basic {background:var(--navy)}
-  .btn-paypal.premium {background:linear-gradient(135deg,var(--navy),var(--dark-blue))}
-  @media (max-width:600px) {.paywall-plans {grid-template-columns:1fr} .option-group {grid-template-columns:1fr}}
-</html>style>
+
+  <!-- PayPal SDK (Sandbox Client ID) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AT3lDO9UP6KY9SIu9XjaWpABL-jMhYhPQd8pzBAGF159cLNWcPyNDWw9YVwiy_IXmrCnIqoQamJsOfQ_&currency=USD"></script>
+
+  <style>
+    :root{
+      --navy:#1b1464;--dark-blue:#2d1b8e;--accent:#6c5ce7;--pink:#fda7df;
+      --green:#2dd4bf;--green-light:#ccfbf1;--card:#fff;--bg:#f9fafb;
+      --border:#e5e7eb;--text:#1f2937;--text-light:#6b7280;
+      --shadow:0 10px 25px rgba(0,0,0,.08)
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:linear-gradient(135deg,#f9fafb 0%,#f3f4f6 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .container{max-width:1000px;margin:0 auto;padding:20px}
+    header{
+      text-align:center;
+      padding:54px 20px 38px;
+      background:linear-gradient(135deg,var(--navy) 0%,var(--dark-blue) 100%);
+      color:#fff;border-radius:20px;margin:18px 0 34px;box-shadow:var(--shadow)
+    }
+    header h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;letter-spacing:.2px}
+    header p{margin-top:10px;opacity:.92;font-size:16px}
+
+    .card{
+      background:var(--card);
+      padding:32px;
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      margin:0 auto 22px;
+      max-width:650px;
+    }
+    label{display:block;margin-bottom:8px;font-weight:600;color:var(--navy)}
+    input[type="text"]{
+      width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;
+      font-family:'DM Sans',sans-serif;font-size:15px;background:#fff
+    }
+    input[type="text"]:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 4px rgba(108,92,231,.12)}
+
+    .btn{
+      width:100%;
+      padding:14px 16px;
+      border:0;border-radius:12px;
+      font-family:'DM Sans',sans-serif;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .2s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--navy),var(--dark-blue));
+      color:#fff;margin-top:16px;
+    }
+    .btn-primary:hover{box-shadow:0 12px 30px rgba(27,20,100,.25);transform:translateY(-1px)}
+    .muted{color:var(--text-light);font-size:13px;margin-top:10px;line-height:1.35}
+
+    .questions{display:none}
+    .questions.show{display:block}
+    .q-title{font-size:18px;font-weight:700;color:var(--navy);margin:18px 0 12px}
+    .option-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+    .option input{display:none}
+    .option label{
+      padding:12px;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;
+      text-align:center;font-weight:600;background:#fff;color:var(--text);
+      transition:border-color .15s ease, transform .15s ease, box-shadow .2s ease;
+    }
+    .option label:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,0,0,.06)}
+    .option input:checked + label{
+      border-color:var(--accent);
+      background:linear-gradient(135deg,rgba(108,92,231,.10),rgba(253,167,223,.10));
+      color:var(--accent)
+    }
+
+    .results{display:none}
+    .results.show{display:block}
+    .result-card{
+      background:linear-gradient(135deg,var(--accent),var(--pink));
+      color:#fff;padding:26px;border-radius:16px;margin-bottom:18px;
+      box-shadow:var(--shadow);
+    }
+    .result-card h2{font-family:'Playfair Display',serif;font-size:30px}
+    .result-card p{margin-top:8px;opacity:.95}
+    .result-details{
+      margin-top:16px;
+      text-align:left;
+      background:rgba(255,255,255,.14);
+      padding:16px;border-radius:12px
+    }
+    .result-details p{margin:8px 0}
+
+    .paywall{
+      background:var(--card);
+      border-radius:16px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      margin-top:16px;
+    }
+    .paywall h3{
+      font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);text-align:center;margin-bottom:6px
+    }
+    .paywall > p{text-align:center;color:var(--text-light);margin-bottom:18px}
+    .legal{
+      display:flex;gap:10px;align-items:flex-start;
+      background:linear-gradient(135deg,#fff,rgba(108,92,231,.04));
+      border:1.5px solid var(--border);
+      padding:12px;border-radius:12px;
+      margin:14px 0 18px;
+      font-size:13px;color:var(--text);
+    }
+    .legal input{margin-top:2px}
+    .plans{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
+    .plan{
+      border:1.5px solid var(--border);
+      border-radius:14px;
+      padding:18px;background:#fff;
+      position:relative;
+      transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .plan:hover{border-color:var(--accent);box-shadow:0 14px 30px rgba(108,92,231,.14);transform:translateY(-2px)}
+    .badge{
+      position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+      background:var(--accent);color:#fff;font-size:11px;font-weight:800;
+      padding:4px 12px;border-radius:999px;
+    }
+    .plan h4{font-size:16px;color:var(--navy);margin-bottom:6px}
+    .price{font-size:28px;font-weight:900;color:var(--accent)}
+    .features{list-style:none;margin:14px 0 10px}
+    .features li{padding:7px 0;border-bottom:1px solid var(--bg);font-size:13px}
+    .features li:last-child{border-bottom:0}
+    .small{font-size:12px;color:var(--text-light);line-height:1.35}
+
+    .invite-box{
+      margin-top:12px;
+      padding:12px;
+      border:1.5px dashed var(--border);
+      border-radius:12px;
+      background:rgba(45,27,142,.02);
+    }
+    .invite-box input{margin-top:8px}
+    .invite-actions{
+      display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;
+    }
+    .btn-secondary{
+      padding:12px 14px;border-radius:12px;border:1.5px solid var(--border);
+      background:#fff;font-weight:800;cursor:pointer;
+    }
+    .btn-secondary:hover{border-color:var(--accent)}
+    .status-line{margin-top:10px;font-size:13px;color:var(--text-light)}
+    .ok{color:#0f766e;font-weight:800}
+    .err{color:#b91c1c;font-weight:800}
+
+    .paypal-wrap{margin-top:10px}
+    .disabled{opacity:.45;pointer-events:none}
+
+    @media (max-width:680px){
+      header h1{font-size:36px}
+      .plans{grid-template-columns:1fr}
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <header>
       <h1>Test Vocacional</h1>
-    <p>Descubre tu carrera ideal</p>
+      <p>Descubre tu carrera ideal en menos de 2 minutos</p>
     </header>
-  <div class="form-section">
-  <div style="margin-bottom:24px">
-  <label>Tu Nombre</label>
-  <input type="text" id="userName" placeholder="Escribe tu nombre...">
-  </div>div>
-  <button class="btn-primary" onclick="startTest()">Comenzar Test</button>button>
-  </div>div>
-  <div class="questions-section" id="questionsSection">
-  <h2 style="font-family:'Playfair Display',serif;font-size:28px;color:var(--navy);margin-bottom:30px">Cuéntanos sobre tus aptitudes</h2>
-  <div><div class="question-title">¿Cuál de estas actividades te atrae más?</div>
-  <div class="option-group">
-    <div class="option"><input type="radio" id="q1a" name="question1" value="creativo"><label for="q1a">Crear</label>label></div>
-    <div class="option"><input type="radio" id="q1b" name="question1" value="analitico"><label for="q1b">Analizar</label>label></div>
-    <div class="option"><input type="radio" id="q1c" name="question1" value="social"><label for="q1c">Ayudar</label>label></div>
-    <div class="option"><input type="radio" id="q1d" name="question1" value="tecnico"><label for="q1d">Construir</label>label></div>
-  </div></div>
-    <div><div class="question-title">¿En qué ambiente prefieres trabajar?</div>
-    <div class="option-group">
-      <div class="option"><input type="radio" id="q2a" name="question2" value="oficina"><label for="q2a">Oficina</label>label></div>
-      <div class="option"><input type="radio" id="q2b" name="question2" value="exteriores"><label for="q2b">Exteriores</label>label></div>
-      <div class="option"><input type="radio" id="q2c" name="question2" value="taller"><label for="q2c">Taller</label>label></div>
-      <div class="option"><input type="radio" id="q2d" name="question2" value="flexible"><label for="q2d">Flexible</label>label></div>
-    </div></div>
-    <div><div class="question-title">¿Cuál es tu nivel de educación deseado?</div>
+
+    <!-- Inicio -->
+    <div class="card" id="startCard">
+      <div>
+        <label for="userName">Tu Nombre</label>
+        <input type="text" id="userName" placeholder="Escribe tu nombre..." />
+        <p class="muted">Este test ofrece una vista previa gratis. El reporte completo incluye recomendaciones más detalladas.</p>
+      </div>
+      <button class="btn btn-primary" id="startBtn">Comenzar Test</button>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="card questions" id="questionsCard">
+      <h2 style="font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);margin-bottom:8px">
+        Cuéntanos sobre tus aptitudes
+      </h2>
+      <p class="muted" style="margin-top:0;margin-bottom:16px">Responde 3 preguntas para obtener tu resultado.</p>
+
+      <div class="q-title">1) ¿Cuál de estas actividades te atrae más?</div>
       <div class="option-group">
-        <div class="option"><input type="radio" id="q3a" name="question3" value="tecnico"><label for="q3a">Técnico</label>label></div>
-        <div class="option"><input type="radio" id="q3b" name="question3" value="licenciatura"><label for="q3b">Licenciatura</label>label></div>
-        <div class="option"><input type="radio" id="q3c" name="question3" value="maestria"><label for="q3c">Maestría</label>label></div>
-        <div class="option"><input type="radio" id="q3d" name="question3" value="doctorado"><label for="q3d">Doctorado</label>label></div>
-      </div></div>
-    <button class="btn-primary" onclick="generateResults()">Ver Resultados</button>button>
-  </div>
-    <div class="results-section" id="resultsSection">
+        <div class="option"><input type="radio" id="q1a" name="q1" value="creativo"><label for="q1a">Crear</label></div>
+        <div class="option"><input type="radio" id="q1b" name="q1" value="analitico"><label for="q1b">Analizar</label></div>
+        <div class="option"><input type="radio" id="q1c" name="q1" value="social"><label for="q1c">Ayudar</label></div>
+        <div class="option"><input type="radio" id="q1d" name="q1" value="tecnico"><label for="q1d">Construir</label></div>
+      </div>
+
+      <div class="q-title">2) ¿En qué ambiente prefieres trabajar?</div>
+      <div class="option-group">
+        <div class="option"><input type="radio" id="q2a" name="q2" value="oficina"><label for="q2a">Oficina</label></div>
+        <div class="option"><input type="radio" id="q2b" name="q2" value="exteriores"><label for="q2b">Exteriores</label></div>
+        <div class="option"><input type="radio" id="q2c" name="q2" value="taller"><label for="q2c">Taller</label></div>
+        <div class="option"><input type="radio" id="q2d" name="q2" value="flexible"><label for="q2d">Flexible</label></div>
+      </div>
+
+      <div class="q-title">3) ¿Cuál es tu nivel de educación deseado?</div>
+      <div class="option-group">
+        <div class="option"><input type="radio" id="q3a" name="q3" value="tecnico"><label for="q3a">Técnico</label></div>
+        <div class="option"><input type="radio" id="q3b" name="q3" value="licenciatura"><label for="q3b">Licenciatura</label></div>
+        <div class="option"><input type="radio" id="q3c" name="q3" value="maestria"><label for="q3c">Maestría</label></div>
+        <div class="option"><input type="radio" id="q3d" name="q3" value="doctorado"><label for="q3d">Doctorado</label></div>
+      </div>
+
+      <button class="btn btn-primary" id="resultBtn">Ver Resultados</button>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results" id="resultsCard">
       <div id="resultsBody"></div>
-      <div id="paywallSection"></div>
+      <div id="paywall"></div>
     </div>
   </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=AT3lDO9UP6KY9SIu9XjaWpABL-jMhYhPQd8pzBAGF159cLNWcPyNDWw9YVwiy_IXmrCnIqoQamJsOfQ_&currency=USD"></script>
+
   <script>
-    function startTest(){const n=document.getElementById('userName').value;if(!n.trim()){alert('Ingresa tu nombre');return}document.querySelector('.form-section').style.display='none';document.getElementById('questionsSection').classList.add('show')}
-    function generateResults(){const q1=document.querySelector('input[name="question1"]:checked')?.value,q2=document.querySelector('input[name="question2"]:checked')?.value,q3=document.querySelector('input[name="question3"]:checked')?.value;if(!q1||!q2||!q3){alert('Completa todas las preguntas');return}let career='Profesional',desc='Basado en respuestas...';if(q1==='creativo'){career='Diseñador';desc='Tu creatividad te hace ideal.'}else if(q1==='analitico'){career='Ingeniero';desc='Tu capacidad analítica es perfecta.'}else if(q1==='social'){career='Psicólogo';desc='Tu empatía abrirá puertas.'}else{career='Técnico';desc='Tu habilidad práctica es valiosa.'}window._lastResults={primary:career,q1,q2,q3};document.getElementById('questionsSection').classList.remove('show');document.getElementById('resultsSection').classList.add('show');const html=`<div class="result-card"><h2>${career}</h2><p>${desc}</p><div class="result-details"><p><strong>Entorno:</strong> ${q2}</p><p><strong>Educación:</strong> ${q3}</p></div></div>`;document.getElementById('resultsBody').innerHTML=html;document.getElementById('paywallSection').innerHTML=`<div class="paywall-section"><h3>Unlock Report</h3><p>Acceso a análisis completo</p><div class="paywall-plans"><div class="plan"><div class="plan-header"><h4>Basic</h4><span class="price">$4.99</span></div><ul class="plan-features"><li>Perfil completo</li><li>Recomendaciones</li><li>PDF</li></ul><button class="btn-paypal basic" onclick="initPayPal('4.99')">Pagar</button></div><div class="plan premium-plan"><div class="plan-badge">RECOMENDADO</div><div class="plan-header"><h4>Premium</h4><span class="price">$9.99</span></div><ul class="plan-features"><li>Perfil completo</li><li>Recomendaciones</li><li>PDF</li><li>Salarios</li><li>Carreras</li><li>Soporte</li></ul><button class="btn-paypal premium" onclick="initPayPal('9.99')">Pagar</button></div></div></div>`}
-    async function initPayPal(amount){try{const r=await fetch('/.netlify/functions/paypal-create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,description:'Career Report'})});const d=await r.json();if(!d.id){alert('Error');return}const c=document.createElement('div');c.id='paypal-'+d.id;c.style.marginTop='16px';document.getElementById('paywallSection').appendChild(c);paypal.Buttons({createOrder:()=>d.id,onApprove:()=>capturePayPal(d.id),onError:e=>{console.error(e);alert('Error')},onCancel:()=>alert('Cancelado')}).render('#paypal-'+d.id)}catch(e){console.error(e);alert('Error')}}
-    async function capturePayPal(id){try{const r=await fetch('/.netlify/functions/paypal-capture-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:id})});const d=await r.json();if(d.paymentStatus==='COMPLETED'){document.getElementById('paywallSection').innerHTML='<div style="background:linear-gradient(135deg,var(--green-light),#E6FFF7);border:1px solid var(--green);border-radius:12px;padding:16px;text-align:center;color:var(--green);font-weight:600">✓ Reporte desbloqueado!</div>';const results=window._lastResults||{};fetch('/.netlify/functions/referral-invite',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({referrerEmail:document.getElementById('userName').value||'anonymous',inviteeEmail:'payment@test.com',testName:results.primary||'Unknown',primaryDimension:results.primary||'Unknown'})}).catch(e=>console.log(e))}else throw new Error('Not completed')}catch(e){console.error(e);alert('Error')}}
+    // ====== State ======
+    let SESSION_ID = null;
+    let invitesEnabled = false;
+
+    function $(id){ return document.getElementById(id); }
+
+    function createSessionId(){
+      SESSION_ID = crypto.randomUUID();
+      return SESSION_ID;
+    }
+
+    function startTest(){
+      const name = $("userName").value.trim();
+      if(!name){ alert("Ingresa tu nombre"); return; }
+      $("startCard").style.display = "none";
+      $("questionsCard").classList.add("show");
+    }
+
+    function computeCareer(q1){
+      if(q1 === "creativo") return { career:"Diseñador", desc:"Tu creatividad destaca y te impulsa a crear soluciones originales." };
+      if(q1 === "analitico") return { career:"Ingeniero", desc:"Tu mente analítica te permite resolver problemas complejos con lógica." };
+      if(q1 === "social") return { career:"Psicólogo", desc:"Tu empatía y comprensión de las personas puede guiar a otros." };
+      return { career:"Técnico", desc:"Tu enfoque práctico te hace excelente ejecutando y optimizando procesos." };
+    }
+
+    function requireAnswers(){
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+      if(!q1 || !q2 || !q3) return null;
+      return { q1, q2, q3 };
+    }
+
+    function renderResults({q1,q2,q3}){
+      const { career, desc } = computeCareer(q1);
+      window._lastResults = { career, q1,q2,q3 };
+
+      $("questionsCard").classList.remove("show");
+      $("resultsCard").classList.add("show");
+
+      $("resultsBody").innerHTML = `
+        <div class="result-card">
+          <h2>${career}</h2>
+          <p>${desc}</p>
+          <div class="result-details">
+            <p><strong>Entorno preferido:</strong> ${q2}</p>
+            <p><strong>Educación deseada:</strong> ${q3}</p>
+            <p style="margin-top:10px;opacity:.92"><strong>Vista previa:</strong> Tu perfil sugiere 2–3 áreas recomendadas. Para verlas con detalle, desbloquea el reporte completo.</p>
+          </div>
+        </div>
+      `;
+
+      renderPaywall();
+    }
+
+    function renderPaywall(){
+      if(!SESSION_ID) createSessionId();
+
+      $("paywall").innerHTML = `
+        <div class="paywall">
+          <h3>Desbloquear Reporte Completo</h3>
+          <p>Pago único. No es suscripción. Transparencia total antes de pagar.</p>
+
+          <div class="legal">
+            <input type="checkbox" id="acceptLegal">
+            <div>
+              <div><strong>Acepto Términos, Privacidad y Reembolsos</strong></div>
+              <div class="small">Al pagar, confirmas que leíste las políticas. Este test ofrece orientación general y no sustituye asesoría profesional.</div>
+            </div>
+          </div>
+
+          <div class="plans">
+            <div class="plan">
+              <h4>Full Personalized Career Report</h4>
+              <div class="price">$7.99</div>
+              <ul class="features">
+                <li>Reporte completo y recomendaciones</li>
+                <li>Interpretación más detallada</li>
+                <li>Acceso inmediato después del pago</li>
+              </ul>
+              <div class="paypal-wrap" id="pp-full"></div>
+              <div class="status-line" id="msg-full"></div>
+            </div>
+
+            <div class="plan">
+              <div class="badge">DESCUENTO</div>
+              <h4>Share with 3 friends</h4>
+              <div class="price">$3.99</div>
+              <ul class="features">
+                <li>Igual que el reporte completo</li>
+                <li>Requiere registrar 3 invitaciones</li>
+                <li>Evita abuso: se valida en servidor</li>
+              </ul>
+
+              <div class="invite-box">
+                <div class="small"><strong>Invita 3 amigos por email</strong> (solo registramos invitaciones para habilitar descuento).</div>
+                <input id="e1" type="text" placeholder="Email 1">
+                <input id="e2" type="text" placeholder="Email 2">
+                <input id="e3" type="text" placeholder="Email 3">
+                <div class="invite-actions">
+                  <button class="btn-secondary" id="sendInvitesBtn">Registrar invitaciones</button>
+                  <span class="status-line" id="inviteMsg"></span>
+                </div>
+              </div>
+
+              <div class="paypal-wrap ${invitesEnabled ? "" : "disabled"}" id="pp-disc"></div>
+              <div class="status-line" id="msg-disc"></div>
+            </div>
+          </div>
+
+          <div class="status-line" id="payGlobalMsg" style="margin-top:14px"></div>
+        </div>
+      `;
+
+      $("sendInvitesBtn").addEventListener("click", onSendInvites);
+
+      initPayPalButtons();
+      setDiscountEnabled(invitesEnabled);
+    }
+
+    function setDiscountEnabled(on){
+      invitesEnabled = !!on;
+      const disc = $("pp-disc");
+      if(!disc) return;
+      disc.classList.toggle("disabled", !invitesEnabled);
+    }
+
+    function legalAccepted(){
+      return $("acceptLegal") && $("acceptLegal").checked;
+    }
+
+    async function createOrder(tier){
+      const res = await fetch("/.netlify/functions/paypal-create-order", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ session_id: SESSION_ID, tier })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data?.error || "No se pudo crear la orden.");
+      return data.id;
+    }
+
+    async function captureOrder(orderID, tier){
+      const res = await fetch("/.netlify/functions/paypal-capture-order", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ orderID, session_id: SESSION_ID, tier })
+      });
+      const data = await res.json();
+      if(!res.ok) throw new Error(data?.error || "No se pudo capturar el pago.");
+      return data;
+    }
+
+    function initPayPalButtons(){
+      // Full $7.99
+      paypal.Buttons({
+        createOrder: async () => {
+          if(!legalAccepted()) throw new Error("Debes aceptar Términos/Privacidad/Reembolsos.");
+          $("msg-full").textContent = "";
+          return await createOrder("FULL_7_99");
+        },
+        onApprove: async (data) => {
+          $("msg-full").textContent = "Procesando pago...";
+          try{
+            const out = await captureOrder(data.orderID, "FULL_7_99");
+            if(out.status === "COMPLETED"){
+              $("msg-full").innerHTML = '<span class="ok">✅ Pago exitoso. Reporte desbloqueado.</span>';
+              unlockReportUI();
+            } else {
+              $("msg-full").innerHTML = '<span class="err">⚠️ Pago no completado.</span>';
+            }
+          }catch(e){
+            $("msg-full").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
+          }
+        },
+        onError: (err) => {
+          $("msg-full").innerHTML = '<span class="err">❌ Error PayPal.</span>';
+          console.error(err);
+        }
+      }).render("#pp-full");
+
+      // Discount $3.99
+      paypal.Buttons({
+        createOrder: async () => {
+          if(!legalAccepted()) throw new Error("Debes aceptar Términos/Privacidad/Reembolsos.");
+          if(!invitesEnabled) throw new Error("Primero registra 3 invitaciones.");
+          $("msg-disc").textContent = "";
+          return await createOrder("DISC_3_99");
+        },
+        onApprove: async (data) => {
+          $("msg-disc").textContent = "Procesando pago...";
+          try{
+            const out = await captureOrder(data.orderID, "DISC_3_99");
+            if(out.status === "COMPLETED"){
+              $("msg-disc").innerHTML = '<span class="ok">✅ Pago exitoso con descuento. Reporte desbloqueado.</span>';
+              unlockReportUI();
+            } else {
+              $("msg-disc").innerHTML = '<span class="err">⚠️ Pago no completado.</span>';
+            }
+          }catch(e){
+            $("msg-disc").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
+          }
+        },
+        onError: (err) => {
+          $("msg-disc").innerHTML = '<span class="err">❌ Error PayPal.</span>';
+          console.error(err);
+        }
+      }).render("#pp-disc");
+    }
+
+    async function onSendInvites(){
+      try{
+        const emails = [ $("e1").value, $("e2").value, $("e3").value ].map(v => (v||"").trim());
+        if(emails.some(e => !e)) { $("inviteMsg").innerHTML = '<span class="err">Completa los 3 emails.</span>'; return; }
+
+        $("inviteMsg").textContent = "Registrando...";
+        const res = await fetch("/.netlify/functions/referral-invite", {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({ session_id: SESSION_ID, emails })
+        });
+        const data = await res.json();
+        if(!res.ok) throw new Error(data?.error || "No se pudieron registrar las invitaciones.");
+
+        $("inviteMsg").innerHTML = '<span class="ok">✅ Listo. Descuento habilitado.</span>';
+        setDiscountEnabled(true);
+      }catch(e){
+        $("inviteMsg").innerHTML = '<span class="err">❌ ' + e.message + '</span>';
+      }
+    }
+
+    function unlockReportUI(){
+      // Aquí tú puedes mostrar el “Full report” real.
+      // Por ahora: mensaje claro.
+      $("payGlobalMsg").innerHTML = '<span class="ok">✅ Desbloqueado: ahora muestra aquí el reporte completo (gráficos, recomendaciones, PDF).</span>';
+    }
+
+    // ====== Bindings ======
+    $("startBtn").addEventListener("click", startTest);
+    $("resultBtn").addEventListener("click", () => {
+      const ans = requireAnswers();
+      if(!ans){ alert("Completa todas las preguntas"); return; }
+      renderResults(ans);
+    });
   </script>
 </body>
 </html>
-  </script>
-    </div>
-  </div></label></p></h1>
-    </header>
-</body>
