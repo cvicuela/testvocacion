@@ -1696,7 +1696,7 @@ async function createOrder(tier){
   const res = await fetch('/.netlify/functions/paypal-create-order', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ session_id: SESSION_ID, tier })
+    body: JSON.stringify({ session_id: SESSION_ID, amount })
   });
   const data = await res.json();
   if(!res.ok) throw new Error(data?.error || 'Failed to create order');
@@ -1709,7 +1709,7 @@ async function captureOrder(orderID, tier){
   const res = await fetch('/.netlify/functions/paypal-capture-order', {
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ orderID, session_id: SESSION_ID, tier })
+    body: JSON.stringify({ orderID, session_id: SESSION_ID, amount })
   });
   const data = await res.json();
   if(!res.ok) throw new Error(data?.error || 'Failed to capture order');
