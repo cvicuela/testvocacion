@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+h<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8">
@@ -93,7 +93,7 @@
       <div id="paywallSection"></div>
     </div>
   </div>
-  <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID_SANDBOX&currency=USD"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AT3lDO9UP6KY9SIu9XjaWpABL-jMhYhPQd8pzBAGF159cLNWcPyNDWw9YVwiy_IXmrCnIqoQamJsOfQ_&currency=USD"></script>
   <script>
     function startTest(){const n=document.getElementById('userName').value;if(!n.trim()){alert('Ingresa tu nombre');return}document.querySelector('.form-section').style.display='none';document.getElementById('questionsSection').classList.add('show')}
     function generateResults(){const q1=document.querySelector('input[name="question1"]:checked')?.value,q2=document.querySelector('input[name="question2"]:checked')?.value,q3=document.querySelector('input[name="question3"]:checked')?.value;if(!q1||!q2||!q3){alert('Completa todas las preguntas');return}let career='Profesional',desc='Basado en respuestas...';if(q1==='creativo'){career='Diseñador';desc='Tu creatividad te hace ideal.'}else if(q1==='analitico'){career='Ingeniero';desc='Tu capacidad analítica es perfecta.'}else if(q1==='social'){career='Psicólogo';desc='Tu empatía abrirá puertas.'}else{career='Técnico';desc='Tu habilidad práctica es valiosa.'}window._lastResults={primary:career,q1,q2,q3};document.getElementById('questionsSection').classList.remove('show');document.getElementById('resultsSection').classList.add('show');const html=`<div class="result-card"><h2>${career}</h2><p>${desc}</p><div class="result-details"><p><strong>Entorno:</strong> ${q2}</p><p><strong>Educación:</strong> ${q3}</p></div></div>`;document.getElementById('resultsBody').innerHTML=html;document.getElementById('paywallSection').innerHTML=`<div class="paywall-section"><h3>Unlock Report</h3><p>Acceso a análisis completo</p><div class="paywall-plans"><div class="plan"><div class="plan-header"><h4>Basic</h4><span class="price">$4.99</span></div><ul class="plan-features"><li>Perfil completo</li><li>Recomendaciones</li><li>PDF</li></ul><button class="btn-paypal basic" onclick="initPayPal('4.99')">Pagar</button></div><div class="plan premium-plan"><div class="plan-badge">RECOMENDADO</div><div class="plan-header"><h4>Premium</h4><span class="price">$9.99</span></div><ul class="plan-features"><li>Perfil completo</li><li>Recomendaciones</li><li>PDF</li><li>Salarios</li><li>Carreras</li><li>Soporte</li></ul><button class="btn-paypal premium" onclick="initPayPal('9.99')">Pagar</button></div></div></div>`}
